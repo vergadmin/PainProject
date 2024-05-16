@@ -5,3 +5,15 @@
     justify-content: center;
     height: 100vh;
 }
+
+.button-area {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
+.description {
+    width: 65%;
+    font-size: 21px;
+    text-align: center;
+}

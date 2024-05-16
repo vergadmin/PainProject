@@ -1,6 +1,11 @@
 /* variables.css */
 :root {
   --poppins: "Poppins", sans-serif;
+  --crimson: #990000;
+  --cream: #EDEBEB;
+  --midnight: #006298;
+  --majestic: #66435A;
+  --base-black: #243142;
 }
 
 
@@ -15,3 +20,34 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+h1, p, video, button {
+  margin: 7px 0px;
+}
+
+h1 {
+  color: var(--crimson);
+}
+
+p {
+  color: var(--base-black);
+}
+
+button {
+  padding: 15px;
+  text-transform: uppercase;
+  border: 0px;
+  border-radius: 15px;
+  background-color: var(--crimson) !important;
+  box-shadow: rgba(100, 100, 111, 0.421) 0px 7px 29px 0px;
+  color: var(--cream);
+  font-weight: 900 !important;
+  transition: .2s ease-in-out;
+  letter-spacing: 1.3px;
+}
+
+button:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+}
+
