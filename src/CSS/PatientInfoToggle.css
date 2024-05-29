@@ -1,0 +1,62 @@
+.patient-info-toggle {
+  position: absolute;
+  top: 35px;
+  left: 35px;
+}
+
+.box {
+  width: 300px;
+  cursor: pointer;
+  transition: height 0.3s;
+  border-radius: 35px;
+  background-color: var(--midnight) !important;
+  box-shadow: 9px 9px 11px -3px rgba(0, 0, 0, 0.315);
+}
+
+.patient-info-title {
+  text-transform: uppercase;
+  color: var(--cream) !important;
+  margin: 0;
+  text-align: left;
+}
+
+.patient-info-subtitle {
+  color: var(--cream) !important;
+  margin: 0;
+  font-size: 11px;
+  text-align: left;
+}
+
+.profile {
+  height: 99px;
+  border-radius: 50%;
+  box-shadow: 9px 9px 11px -3px rgba(0, 0, 0, 0.151);
+}
+
+.info {
+  color: var(--base-black);
+  text-align: left;
+}
+
+.expansion-area {
+  background-color: var(--cream);
+  border-radius: 0 0 35px 35px;
+  padding: 19px;
+}
+
+.info-top {
+  padding: 19px;
+}
+
+.info-section {
+  text-transform: uppercase;
+  font-weight: 600;
+  text-align: left;
+  margin-top: 15px;
+}
+  
+ul {
+  color: var(--base-black);
+  text-align: left;
+  margin: 5px 0;
+}

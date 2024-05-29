@@ -38,9 +38,7 @@ button {
   text-transform: uppercase;
   border: 0px;
   border-radius: 15px;
-  background-color: var(--crimson) !important;
-  box-shadow: rgba(100, 100, 111, 0.421) 0px 7px 29px 0px;
-  color: var(--cream);
+  box-shadow: rgba(17, 17, 17, 0.247) 7px 7px 19px 0px;
   font-weight: 900 !important;
   transition: .2s ease-in-out;
   letter-spacing: 1.3px;
@@ -51,3 +49,28 @@ button:hover {
   transform: scale(1.1);
 }
 
+.button-link-light {
+  color: var(--cream);
+  text-decoration: none;
+}
+
+.default-btn {
+  background-color: var(--crimson) !important;
+  color: var(--cream);
+}
+
+.important-btn {
+  background-color: var(--midnight) !important;
+  color: var(--cream);
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+hr {
+  margin: 25px 0;
+}

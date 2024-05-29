@@ -1,6 +1,7 @@
 // Introduction.js
 import React, { useState } from 'react';
 import '../CSS/Introduction.css'; // Importing the CSS file
+import { Link } from 'react-router-dom';
 
 function Introduction() {
   const [currentContentIndex, setCurrentContentIndex] = useState(0);
@@ -25,13 +26,15 @@ function Introduction() {
       <h1>Introduction to {contentItems[currentContentIndex].name}</h1>
       <p className="description">Daren, a virtual physician "expert," will give a brief talk pain disparities, perspective-taking, and empathy. Click the video below to begin!</p>
       <br/>
-      <video key={contentItems[currentContentIndex].src} height="650" controls>
+      <video key={contentItems[currentContentIndex].src} height="550" controls>
           <source src={contentItems[currentContentIndex].src} type="video/mp4" />
           Your browser does not support the video tag.
       </video> 
+      <br/>
       <div className='button-area'>
-        {currentContentIndex != 0 && <button className='previous' onClick={handlePrevious}>◄ Previous: {contentItems[currentContentIndex-1].name}</button> }
-        {currentContentIndex != contentItems.length-1 && <button className='next' onClick={handleNext}>Next: {contentItems[currentContentIndex+1].name} ►</button> }
+        {currentContentIndex !== 0 && <button className='default-btn' onClick={handlePrevious}>◄ Previous: {contentItems[currentContentIndex-1].name}</button> }
+        {currentContentIndex !== contentItems.length-1 && <button className='default-btn' onClick={handleNext}>Next: {contentItems[currentContentIndex+1].name} ►</button> }
+        {currentContentIndex === 2 && <button className='important-btn'> <Link className="button-link-light" to="/interaction">✔ Begin Patient Interaction</Link> </button> }
       </div>
     </div>
   );
