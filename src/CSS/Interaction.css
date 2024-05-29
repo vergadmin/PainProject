@@ -1,7 +1,45 @@
-.interaction {
+.video-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+  
+  .video-background video {
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -100;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  .content-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
-    height: 100vh;
-}
+    align-items: center;
+    color: white; /* Change color as needed */
+    text-align: center;
+    z-index: 1; /* Ensure content appears on top of video */
+  }
+  
+  df-messenger {
+    --df-messenger-bot-message: var(--midnight);
+    --df-messenger-button-titlebar-color: var(--crimson);
+    --df-messenger-chat-background-color: var(--cream);
+    --df-messenger-font-color: var(--cream);
+    --df-messenger-send-icon: var(--crimson);
+    --df-messenger-user-message: var(--crimson);
+    text-align: left;
+   }
