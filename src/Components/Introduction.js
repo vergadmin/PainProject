@@ -30,8 +30,8 @@ function Introduction() {
           Your browser does not support the video tag.
       </video> 
       <div className='button-area'>
-        {currentContentIndex != 0 && <button className='previous' onClick={handlePrevious}>◄ Previous: {contentItems[currentContentIndex-1].name}</button> }
-        {currentContentIndex != contentItems.length-1 && <button className='next' onClick={handleNext}>Next: {contentItems[currentContentIndex+1].name} ►</button> }
+        {currentContentIndex !== 0 && <button className='previous' onClick={handlePrevious}>◄ Previous: {contentItems[currentContentIndex-1].name}</button> }
+        {currentContentIndex !== contentItems.length-1 && <button className='next' onClick={handleNext}>Next: {contentItems[currentContentIndex+1].name} ►</button> }
       </div>
     </div>
   );
