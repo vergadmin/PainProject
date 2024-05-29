@@ -5,9 +5,9 @@ import '../CSS/Introduction.css'; // Importing the CSS file
 function Introduction() {
   const [currentContentIndex, setCurrentContentIndex] = useState(0);
   const contentItems = [
-    { name: 'Pain Disparities', src: '/videos/PainDisparities.mp4' },
-    { name: 'Empathy', src: '/videos/Empathy.mp4' },
-    { name: 'Perspective Taking', src: '/videos/PerspectiveTaking.mp4' },
+    { name: 'Pain Disparities', src: 'https://painproject-content.s3.amazonaws.com/didactic-agent/PainDisparities.mp4' },
+    { name: 'Empathy', src: 'https://painproject-content.s3.amazonaws.com/didactic-agent/Empathy.mp4' },
+    { name: 'Perspective Taking', src: 'https://painproject-content.s3.amazonaws.com/didactic-agent/PerspectiveTaking.mp4' },
   ];
 
   const handleNext = () => {
