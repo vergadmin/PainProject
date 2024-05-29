@@ -2,9 +2,9 @@ name: Upload Website
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "aws-pipeline" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "aws-pipeline" ]
 
 jobs:
   build:
