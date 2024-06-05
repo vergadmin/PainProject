@@ -55,7 +55,7 @@ function Interaction() {
         changeVideoSource(videoURL);
       }
     });
-  }, [changeVideoSource]);
+  }, [changeVideoSource, changeSubtitleSource]);
 
   useEffect(() => {
     responseVideoRef.current = document.getElementById("responseVideo");
