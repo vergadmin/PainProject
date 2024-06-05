@@ -21,6 +21,7 @@ app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
     console.log(`Database Server: ${process.env.SERVER}`);
     console.log(`Database User: ${config.user}`);
+    console.log(`Database User: ${process.env.DATABASE}`);
 });
 
 var sql = require("mssql");

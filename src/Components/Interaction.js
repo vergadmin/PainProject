@@ -5,6 +5,7 @@ import PatientInfoToggle from '../Helpers/PatientInfoToggle';
 
 function Interaction() {
   const [responseVideoSrc, setResponseVideoSrc] = useState('');
+  const [responseSubtitleSrc, setResponseSubtitleSrc] = useState('');
   const [responseVideoVisibility, setResponseVideoVisibility] = useState('hide');
   const [idleVideoVisibility, setIdleVideoVisibility] = useState('show');
   const [isMinimized, setIsMinimized] = useState(false);
@@ -27,6 +28,12 @@ function Interaction() {
     toggleMinimize(true);
   }, []);
 
+
+  const changeSubtitleSource = useCallback((newSrc) => {
+    console.log("TRIGGERED Subtitle", newSrc);
+    setResponseSubtitleSrc(newSrc);
+  }, []);
+
   const switchToIdle = () => {
     console.log("SWITCHING BACK TO IDLE");
     setResponseVideoVisibility('hide');
@@ -42,7 +49,9 @@ function Interaction() {
       console.log(displayName);
       const AWSVideoURLBase = "https://painproject-content.s3.amazonaws.com/rhonda-moore-videos/";
       const videoURL = `${AWSVideoURLBase}${displayName}.mp4`;
+      const subtitleURL = `${AWSVideoURLBase}${displayName}.vtt`;
       if (displayName !== "DefaultWelcomeIntent") {
+        changeSubtitleSource(subtitleURL);
         changeVideoSource(videoURL);
       }
     });
@@ -59,6 +68,7 @@ function Interaction() {
       <div className="video-background">
       <video id="responseVideo" className={responseVideoVisibility} key={responseVideoSrc} onEnded={switchToIdle} autoPlay>
         <source src={responseVideoSrc} type="video/mp4" />
+        <track default kind="captions" srclang="en" src={responseSubtitleSrc} />
         {/* Add additional source elements for different video formats */}
         Your browser does not support the video tag.
       </video>
