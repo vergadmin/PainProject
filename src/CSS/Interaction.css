@@ -19,22 +19,14 @@
     transform: translate(-50%, -50%);
   }
 
-  .video-background video::cue {
-      position: 70%;
-      align:center; /* Move the subtitles 20vh up */
-  }
-
-  #responseVideo::cue {
-    position: 70%;
-    align:center;
-}
-
-  .video-background video::cue {
-      background: rgba(0, 0, 0, 0.8); /* Optional: to ensure the text is readable */
-      color: white;
-      padding: 5px;
-      font-size: 1.2em;
-      border-radius: 5px;
+  .custom-cues {
+    position: absolute;
+    bottom: 20%;
+    left: 10%;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 5px;
+    border-radius: 5px;
   }
   
   .content-overlay {

@@ -92,4 +92,12 @@ function Interaction() {
   );
 }
 
+const track = document.getElementById('track');
+track.addEventListener('load', function () {
+  const cues = track.track.cues;
+  for (let i = 0; i < cues.length; i++) {
+    cues[i].displayState.classList.add('custom-cues');
+  }
+});
+
 export default Interaction;
