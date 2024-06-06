@@ -24,6 +24,11 @@
       align:center; /* Move the subtitles 20vh up */
   }
 
+  #responseVideo::cue {
+    position: 70%;
+    align:center;
+}
+
   .video-background video::cue {
       background: rgba(0, 0, 0, 0.8); /* Optional: to ensure the text is readable */
       color: white;
