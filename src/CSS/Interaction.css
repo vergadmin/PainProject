@@ -18,10 +18,10 @@
     left: 50%;
     transform: translate(-50%, -50%);
   }
-  
+
   .video-background video::cue {
-      position: relative;
-      bottom: 20vh; /* Move the subtitles 20vh up */
+      position: 70%;
+      align:center; /* Move the subtitles 20vh up */
   }
 
   .video-background video::cue {
