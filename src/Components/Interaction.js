@@ -68,7 +68,7 @@ function Interaction() {
       <div className="video-background">
       <video crossorigin="anonymous" id="responseVideo" className={responseVideoVisibility} key={responseVideoSrc} onEnded={switchToIdle} autoPlay>
         <source src={responseVideoSrc} type="video/mp4" />
-        <track default kind="captions" srclang="en" src={responseSubtitleSrc} />
+        <track id="track" default kind="captions" srclang="en" src={responseSubtitleSrc} />
         {/* Add additional source elements for different video formats */}
         Your browser does not support the video tag.
       </video>
