@@ -7,12 +7,10 @@ import Interaction from './Components/Interaction';
 function App() {
   return (
     <Router>
-      <div>
         <Routes>
           <Route exact path='/' element={<Introduction/>} />
           <Route exact path='/interaction' element={<Interaction/>} />
         </Routes>
-      </div>
     </Router>
   );
 }

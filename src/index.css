@@ -27,6 +27,8 @@ h1, p, video, button {
 
 h1 {
   color: var(--crimson);
+  font-size: 25px !important;
+  text-transform: uppercase;
 }
 
 p {
@@ -42,6 +44,15 @@ button {
   font-weight: 900 !important;
   transition: .2s ease-in-out;
   letter-spacing: 1.3px;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed !important;
+}
+
+button:disabled:hover {
+  transform: scale(1);
 }
 
 button:hover {
@@ -69,6 +80,13 @@ button:hover {
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 hr {
