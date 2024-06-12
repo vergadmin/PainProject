@@ -14,7 +14,7 @@ video {
     display: flex;
     justify-content: space-around;
     width: 100%;
-    opacity: 0% !important;
+    opacity: 100%;
 }
 
 .description {
@@ -24,8 +24,7 @@ video {
 }
 
 .nav-area {
-    opacity: 0% !important;
-    transition: .2s ease-in-out;
+    opacity: 100% !important;
     width: 100%;
 }
 
@@ -34,6 +33,10 @@ video {
     padding: 9px;
     border-radius: 15px;
     margin-bottom: 15px !important;
+}
+
+.hide-buttons {
+    opacity: 0%;
 }
 
 .show {

@@ -20,6 +20,8 @@ function Introduction() {
   ];
 
   const handleNext = () => {
+    console.log("HERE")
+    
     if (contentItems[currentContentIndex].name === 'Perspective Taking 2' && userInput.trim() === '') {
       alert('Please enter a response to Daren before proceeding.');
       return;
@@ -37,7 +39,6 @@ function Introduction() {
     const videoElement = videoRef.current;
 
     const handleTimeUpdate = () => {
-      console.log("IN HANDLE TIME UPDATE")
       if (videoElement) {
         const timeRemaining = videoElement.duration - videoElement.currentTime;
         setShowNextButton(timeRemaining <= 5);
@@ -63,12 +64,14 @@ function Introduction() {
         <source src={contentItems[currentContentIndex].src} type="video/mp4" />
         Your browser does not support the video tag.
       </video> 
-      <div className={`col nav-area ${showNextButton ? 'show' : null}`}>
+      <div className='col nav-area'>
         {contentItems[currentContentIndex].name === 'Perspective Taking 2' && <textarea value={userInput} onChange={(e) => setUserInput(e.target.value)} className={`user-input ${showNextButton ? 'show' : null}`} type="textarea" name="user-input" rows='2' cols='75' placeholder="Type your response to Daren..."/>}
-        <div className={`button-area ${showNextButton ? 'show' : null}`}>
+        <div className='button-area'>
           {currentContentIndex !== 0 && <button className='default-btn' onClick={handlePrevious}>◄ Previous: {contentItems[currentContentIndex-1].name}</button>}
-          {currentContentIndex !== contentItems.length - 1 && <button className='default-btn' onClick={handleNext}>Next: {contentItems[currentContentIndex + 1].name} ►</button>}
-          {currentContentIndex === contentItems.length - 1 && <button className='important-btn'><Link className="button-link-light" to="/interaction">✔ Begin Patient Interaction</Link></button>}
+          <div className={`hide-buttons ${showNextButton ? 'show' : null}`}>
+            {currentContentIndex !== contentItems.length - 1 && <button className='default-btn' onClick={handleNext}>Next: {contentItems[currentContentIndex + 1].name} ►</button>}
+            {currentContentIndex === contentItems.length - 1 && <button className='important-btn'><Link className="button-link-light" to="/interaction">✔ Begin Patient Interaction</Link></button>}
+          </div>
         </div>
       </div>
     </div>
