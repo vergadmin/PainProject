@@ -2,10 +2,36 @@ import React, { useState, useEffect, useRef } from 'react';
 import '../CSS/Introduction.css'; // Importing the CSS file
 import { Link } from 'react-router-dom';
 
+window.addEventListener("load", async() => {
+  const urlParams = new URLSearchParams(window.location.search);
+  if(sessionStorage.getItem("participantID") == undefined || sessionStorage.getItem("visitID") == undefined){
+    sessionStorage.setItem("participantID", urlParams.get('participantID'));
+    var visitID = await getVisitID();
+    sessionStorage.setItem("visitID", visitID);
+    sessionStorage.setItem("loginTime", new Date().toISOString().slice(0, 19).replace('T', ' '));
+  }
+});
+
+async function getVisitID(){
+  try {
+    var participantID = sessionStorage.getItem("participantID");
+    const response = await fetch(`/pain/getParticipantVisitID?participantID=${participantID}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    });
+    const data = await response.json();
+    return data.visitID;
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
 function Introduction() {
   const [currentContentIndex, setCurrentContentIndex] = useState(0);
   const [showNextButton, setShowNextButton] = useState(false);
-  const [userInput, setUserInput] = useState('');
+  const [userInput, setUserInput] = useState(sessionStorage.getItem("userPrompt") || '');
   const videoRef = useRef(null);
 
   const contentItems = [
@@ -19,14 +45,44 @@ function Introduction() {
     { name: 'Perspective Taking 3', src: 'https://painproject-content.s3.amazonaws.com/didactic-agent/PerspectiveTaking3.mp4' },
   ];
 
-  const handleNext = () => {
-    if (contentItems[currentContentIndex].name === 'Perspective Taking 2' && userInput.trim() === '') {
-      alert('Please enter a response to Daren before proceeding.');
-      return;
+  const handleNext = async () => {
+    if (contentItems[currentContentIndex].name === 'Perspective Taking 2') {
+      if(userInput.trim() === ''){
+        alert('Please enter a response to Daren before proceeding.');
+        return;
+      }
+      else{
+        setUserPrompt(userInput);
+      }
     }
     setShowNextButton(false);
     setCurrentContentIndex((prevIndex) => (prevIndex + 1) % contentItems.length);
   };
+
+  function setUserPrompt(userPrompt){
+      sessionStorage.setItem("userPrompt", userPrompt);
+  };
+
+  async function LogUserInputToDB(){
+    try {
+      const response = await fetch('/pain/logParticipantVisit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(
+          {participantID : sessionStorage.getItem("participantID"), 
+            visitID : sessionStorage.getItem("visitID"),
+            loginTime : sessionStorage.getItem("loginTime"),
+            userPrompt: sessionStorage.getItem("userPrompt")
+        })
+      });
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }
 
   const handlePrevious = () => {
     setShowNextButton(false);
@@ -68,7 +124,7 @@ function Introduction() {
         <div className={`button-area ${showNextButton ? 'show' : null}`}>
           {currentContentIndex !== 0 && <button className='default-btn' onClick={handlePrevious}>◄ Previous: {contentItems[currentContentIndex-1].name}</button>}
           {currentContentIndex !== contentItems.length - 1 && <button className='default-btn' onClick={handleNext}>Next: {contentItems[currentContentIndex + 1].name} ►</button>}
-          {currentContentIndex === contentItems.length - 1 && <button className='important-btn'><Link className="button-link-light" to="/interaction">✔ Begin Patient Interaction</Link></button>}
+          {currentContentIndex === contentItems.length - 1 && <button className='important-btn' onClick={LogUserInputToDB}><Link className="button-link-light" to="/interaction">✔ Begin Patient Interaction</Link></button>}
         </div>
       </div>
     </div>
