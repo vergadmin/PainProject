@@ -1,0 +1,37 @@
+/* Interaction.css */
+
+/* Container for the content with a fixed width */
+.content-container {
+    width: 500px;
+    margin: 0 auto; /* Center the container */
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    text-align: left; /* Ensure text alignment to left */
+  }
+  
+  /* Change the font and spacing of the checkbox labels */
+  .checkbox-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px; /* Adjust spacing between checkboxes */
+  }
+  
+  /* Align checkboxes to the left */
+  .checkbox-input {
+    margin-right: 8px; /* Space between checkbox and label */
+  }
+  
+  /* Optional: Style the checkboxes themselves */
+  .checkbox-input {
+    width: 20px;
+    height: 20px;
+    accent-color: #007bff; /* Change the color of the checkbox */
+  }
+  
+  /* Change the font of the checkbox labels */
+  .checkbox-label {
+    font-size: 20px; /* Change font size */
+  }
+  

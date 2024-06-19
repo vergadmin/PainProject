@@ -124,7 +124,7 @@ function Introduction() {
           {currentContentIndex !== 0 && <button className='default-btn' onClick={handlePrevious}>◄ Previous: {contentItems[currentContentIndex-1].name}</button>}
           <div className={`hide-buttons ${showNextButton ? 'show' : null}`}>
             {currentContentIndex !== contentItems.length - 1 && <button className='default-btn' onClick={handleNext}>Next: {contentItems[currentContentIndex + 1].name} ►</button>}
-            {currentContentIndex === contentItems.length - 1 && <button className='important-btn' onClick={LogUserInputToDB}><Link className="button-link-light" to="/interaction">✔ Begin Patient Interaction</Link></button>}
+            {currentContentIndex === contentItems.length - 1 && <button className='important-btn' onClick={LogUserInputToDB}><Link className="button-link-light" to="/fiction">✔ Begin Patient Interaction</Link></button>}
           </div>
         </div>
       </div>
