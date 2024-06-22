@@ -2,12 +2,15 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import '../CSS/Interaction.css'; // Importing the CSS file
 import PatientInfoToggle from '../Helpers/PatientInfoToggle';
+import { LogMessagesToDB } from '../Helpers/ConversationLogging';
 
 function Interaction() {
   const [responseVideoSrc, setResponseVideoSrc] = useState('');
   const [responseVideoVisibility, setResponseVideoVisibility] = useState('hide');
   const [idleVideoVisibility, setIdleVideoVisibility] = useState('show');
   const [isMinimized, setIsMinimized] = useState(false);
+  const [lastUserMessage, setLastUserMessage] = useState('');
+  const [lastSystemResponse, setLastSystemResponse] = useState('');
 
   const responseVideoRef = useRef(null);
   const idleVideoRef = useRef(null);
@@ -34,8 +37,23 @@ function Interaction() {
     toggleMinimize(false);
   };
 
+  const getLastInteraction = useCallback(() => {
+    const interaction = {
+      userMessage: lastUserMessage,
+      systemResponse: lastSystemResponse,
+      messageTime: new Date().toISOString().slice(0, 19).replace('T', ' '),
+    };
+    return interaction;
+  }, [lastUserMessage, lastSystemResponse]);
+  
   const fetchSynthesiaVideo = useCallback(() => {
     dfMessengerRef.current.addEventListener('df-response-received', (event) => {
+      const userMessage = event.detail.response.queryResult.queryText;
+      const systemResponse = event.detail.response.queryResult.fulfillmentText;
+
+      setLastUserMessage(userMessage);
+      setLastSystemResponse(systemResponse);
+
       let displayName = event.detail.response.queryResult.intent.displayName;
       displayName = displayName.replaceAll(" ", "");
       displayName = displayName.replaceAll("/", "_");
@@ -52,11 +70,13 @@ function Interaction() {
     responseVideoRef.current = document.getElementById("responseVideo");
     idleVideoRef.current = document.getElementById("idleVideo");
     dfMessengerRef.current = document.querySelector('df-messenger');
+    var lastMessage = getLastInteraction();
+    LogMessagesToDB(lastMessage);
     fetchSynthesiaVideo();
-  }, [fetchSynthesiaVideo]);
+  }, [fetchSynthesiaVideo, getLastInteraction]);
 
   return (
-      <div className="video-background">
+    <div className="video-background">
       <video id="responseVideo" className={responseVideoVisibility} key={responseVideoSrc} onEnded={switchToIdle} autoPlay>
         <source src={responseVideoSrc} type="video/mp4" />
         {/* Add additional source elements for different video formats */}

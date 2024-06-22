@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 window.addEventListener("load", async() => {
   const urlParams = new URLSearchParams(window.location.search);
-  if(sessionStorage.length < 1){
+  if(sessionStorage.length < 1 && urlParams.get('participantID') !== null){
     sessionStorage.setItem("participantID", urlParams.get('participantID'));
     var visitID = await getVisitID();
     sessionStorage.setItem("visitID", visitID);
