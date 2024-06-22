@@ -35,7 +35,7 @@ const Fiction = () => {
   const handleNext = () => {
     if (checkedItems.every(item => item)) {
       const nextIndex = currentContentIndex + 1;
-      if (nextIndex == 2) { // 3
+      if (nextIndex === 2) { // 3
         const nextHeaderIndex = currentHeaderIndex + 1;
         setCheckedItems(new Array(contentItems[nextIndex].content.length).fill(false)); // Reset checkboxes for the next item
         setCurrentContentIndex(nextIndex);
