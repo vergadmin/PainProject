@@ -58,8 +58,8 @@ const Fiction = () => {
     <div className = 'fiction'>
       <h1>{header}</h1>
       <div className="info-box">
-      <p className="description">{subText1}</p>
-      <p className="description">{subText2}</p>
+      <p className="fiction-description">{subText1}</p>
+      <p className="fiction-description">{subText2}</p>
       </div>
       <h2 style={{ marginBottom: '0px'}}>{title}</h2>
       <h3>{subTitle}</h3>
