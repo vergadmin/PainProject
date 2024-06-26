@@ -40,7 +40,7 @@ function Introduction() {
     { name: `Gwen's Story`, src: 'https://painproject-content.s3.amazonaws.com/didactic-agent/EmpathyGwen.mp4' },
     { name: `Empathy 2`, src: 'https://painproject-content.s3.amazonaws.com/didactic-agent/Empathy2.mp4' },
     { name: 'Perspective Taking 1', src: 'https://painproject-content.s3.amazonaws.com/didactic-agent/PerspectiveTaking1.mp4' },
-    { name: `Daren's Story`, src: 'https://painproject-content.s3.amazonaws.com/didactic-agent/PerspectiveTakingDaren.mp4' },
+    { name: `Andre's Story`, src: 'https://painproject-content.s3.amazonaws.com/didactic-agent/PerspectiveTakingAndre.mp4' },
     { name: 'Perspective Taking 2', src: 'https://painproject-content.s3.amazonaws.com/didactic-agent/PerspectiveTaking2.mp4' },
     { name: 'Perspective Taking 3', src: 'https://painproject-content.s3.amazonaws.com/didactic-agent/PerspectiveTaking3.mp4' },
   ];
@@ -48,7 +48,7 @@ function Introduction() {
   const handleNext = async () => {
     if (contentItems[currentContentIndex].name === 'Perspective Taking 2') {
       if(userInput.trim() === ''){
-        alert('Please enter a response to Daren before proceeding.');
+        alert('Please enter a response to Andre before proceeding.');
         return;
       }
       else{
@@ -119,7 +119,7 @@ function Introduction() {
         Your browser does not support the video tag.
       </video> 
       <div className='col nav-area'>
-        {contentItems[currentContentIndex].name === 'Perspective Taking 2' && <textarea value={userInput} onChange={(e) => setUserInput(e.target.value)} className={`user-input ${showNextButton ? 'show' : null}`} type="textarea" name="user-input" rows='2' cols='75' placeholder="Type your response to Daren..."/>}
+        {contentItems[currentContentIndex].name === 'Perspective Taking 2' && <textarea value={userInput} onChange={(e) => setUserInput(e.target.value)} className={`user-input ${showNextButton ? 'show' : null}`} type="textarea" name="user-input" rows='2' cols='75' placeholder="Type your response to Andre..."/>}
         <div className='button-area'>
           {currentContentIndex !== 0 && <button className='default-btn' onClick={handlePrevious}>◄ Previous: {contentItems[currentContentIndex-1].name}</button>}
           <div className={`hide-buttons ${showNextButton ? 'show' : null}`}>

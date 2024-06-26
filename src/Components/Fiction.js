@@ -55,25 +55,31 @@ const Fiction = () => {
   const { header, subText1, subText2} = headerItems[currentHeaderIndex];
 
   return (
-    <div className = 'introduction'>
-        <h1>{header}</h1>
-        <p className="description">{subText1}</p>
-        <p className="description">{subText2}</p>
-      <h2>{title}</h2>
+    <div className = 'fiction'>
+      <h1>{header}</h1>
+      <div className="info-box">
+      <p className="description">{subText1}</p>
+      <p className="description">{subText2}</p>
+      </div>
+      <h2 style={{ marginBottom: '0px'}}>{title}</h2>
       <h3>{subTitle}</h3>
-      {content.map((item, index) => (
-        <div key={index} className="checkbox-container">
-          <input
-            type="checkbox"
-            className="checkbox-input"
-            checked={checkedItems[index]}
-            onChange={() => handleCheckboxChange(index)}
-          />
-          <label className="checkbox-label">
-            {item}
-          </label>
-        </div>
-      ))}
+      <div className='checkbox-area'>
+        {content.map((item, index) => (
+          <div key={index} className="checkbox-container">
+            <input
+              type="checkbox"
+              className="checkbox-input"
+              checked={checkedItems[index]}
+              onChange={() => handleCheckboxChange(index)}
+            />
+            <label className="checkbox-label">
+              {item}
+            </label>
+          </div>
+        ))}
+      </div>
+      <br/>
+      <p>Please check all boxes above to continue.</p>
       <button onClick={handleNext} className = "default-btn" disabled={!canProceed}>
         Next
       </button>
