@@ -90,12 +90,12 @@ function Interaction() {
       <div className="content-overlay">
         {/* Add your content here */}
         <PatientInfoToggle />
+        <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
         <df-messenger
           intent="WELCOME"
-          chat-title="Patient: Rhonda Moore"
-          agent-id="933558cf-b5c2-455e-8910-c52a1c14ea07"
+          chat-title="vpip-RhondaMoore"
+          agent-id="f2116458-3970-4407-8f5a-b74041399bbe"
           language-code="en"
-          {...(isMinimized ? { minimize: true } : { expand: true })}
         ></df-messenger>
       </div>
     </div>
