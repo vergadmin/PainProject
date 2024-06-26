@@ -113,7 +113,7 @@ function Introduction() {
   return (
     <div className='introduction'>
       <h1>{contentItems[currentContentIndex].name}</h1>
-      <p className="description">Daren, a virtual physician "expert," will give a brief talk pain disparities, perspective-taking, and empathy. Click the video below to begin!</p>
+      <p className="description">Daren, a virtual physician, will give a brief overview on pain disparities, empathy, and perspective-taking. Click the video below to begin.</p>
       <video ref={videoRef} key={contentItems[currentContentIndex].src} height="500" controls>
         <source src={contentItems[currentContentIndex].src} type="video/mp4" />
         Your browser does not support the video tag.
