@@ -47,10 +47,10 @@ function PatientInfoToggle() {
                 <li>How pain affects: Work, Family, Social, Mood, Sleep, Appetite/Weight</li>
               </ul>
               <hr/>
-              <div className='row'>
+              {/* <div className='row'>
                 <button className="important-btn" onClick={tempMessage}>Need Help?</button>
                 <button className="important-btn" onClick={tempMessage}>Finished?</button>
-              </div>
+              </div> */}
             </div>
           </div>
         ) : (

@@ -89,6 +89,10 @@ function Interaction() {
       </video>
       <div className="content-overlay">
         {/* Add your content here */}
+        <div className='btn-box'>
+        <button className="important-btn btn-spacing">Need Help?</button>
+        <button className="important-btn">Finished?</button>
+        </div>
         <PatientInfoToggle />
         <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
         <df-messenger
