@@ -1,0 +1,47 @@
+.fiction {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.checkbox-area {
+  width: 65%;
+}
+  
+  /* Change the font and spacing of the checkbox labels */
+  .checkbox-container {
+    text-align: center;
+    margin-bottom: 10px; /* Adjust spacing between checkboxes */
+  }
+
+  /* Align checkboxes to the left */
+input .checkbox-input {
+    accent-color: var(--majestic) !important; /* Change the color of the checkbox */
+    transition: .2s ease-in-out;
+  }
+
+  .checkbox-input:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+  }
+  
+  /* Change the font of the checkbox labels */
+  .checkbox-label {
+    font-size: 20px; /* Change font size */
+    margin-left: 7px !important;
+  }
+
+  .info-box {
+    border-left: 3px solid #49AFC7;
+    padding: 25px;
+    margin: 25px 65px 25px 65px;
+    background-color: #E9F6FC;
+  }
+
+  .description {
+    width: 100%;
+    text-align: left;
+  }
+  
