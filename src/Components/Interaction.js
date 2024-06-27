@@ -2,6 +2,7 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import '../CSS/Interaction.css'; // Importing the CSS file
 import PatientInfoToggle from '../Helpers/PatientInfoToggle';
+import ModalComponent from '../Helpers/ModalComponent';
 import { LogMessagesToDB } from '../Helpers/ConversationLogging';
 
 function Interaction() {
@@ -12,6 +13,19 @@ function Interaction() {
   const [lastUserMessage, setLastUserMessage] = useState('');
   const [lastSystemResponse, setLastSystemResponse] = useState('');
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalType, setModalType] = useState('');
+
+  const openModal = (type) => {
+    setModalType(type);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setModalType('');
+  };
+
   const responseVideoRef = useRef(null);
   const idleVideoRef = useRef(null);
   const dfMessengerRef = useRef(null);
@@ -19,10 +33,6 @@ function Interaction() {
   const toggleMinimize = (toggle) => {
     setIsMinimized(toggle);
   };
-
-  const tempMessage = () => {
-    alert("We have not implemented this button's functionality yet. Stay tuned! :)")
-  }
 
   const changeVideoSource = useCallback((newSrc) => {
     console.log("TRIGGERED", newSrc);
@@ -93,8 +103,11 @@ function Interaction() {
       </video>
       <div className="content-overlay">
         {/* Add your content here */}
-        <button className="finish-btn" onClick={tempMessage}>Finished?</button>
-        <button className="help-btn" onClick={tempMessage}>?</button>
+        <button className="finish-btn" onClick={() => openModal('finished')}>Finished?</button>
+        <button className="help-btn" onClick={() => openModal('help')}>?</button>
+
+        <ModalComponent isOpen={isModalOpen} type={modalType} onClose={closeModal} />
+
         <PatientInfoToggle />
         <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
         <df-messenger
