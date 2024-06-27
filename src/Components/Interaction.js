@@ -20,6 +20,10 @@ function Interaction() {
     setIsMinimized(toggle);
   };
 
+  const tempMessage = () => {
+    alert("We have not implemented this button's functionality yet. Stay tuned! :)")
+  }
+
   const changeVideoSource = useCallback((newSrc) => {
     console.log("TRIGGERED", newSrc);
     setResponseVideoSrc(newSrc);
@@ -89,10 +93,8 @@ function Interaction() {
       </video>
       <div className="content-overlay">
         {/* Add your content here */}
-        <div className='btn-box'>
-        <button className="important-btn btn-spacing">Need Help?</button>
-        <button className="important-btn">Finished?</button>
-        </div>
+        <button className="finish-btn" onClick={tempMessage}>Finished?</button>
+        <button className="help-btn" onClick={tempMessage}>?</button>
         <PatientInfoToggle />
         <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
         <df-messenger
@@ -100,6 +102,7 @@ function Interaction() {
           chat-title="vpip-RhondaMoore"
           agent-id="f2116458-3970-4407-8f5a-b74041399bbe"
           language-code="en"
+          {...(isMinimized ? { minimize: true } : { expand: true })}
         ></df-messenger>
       </div>
     </div>

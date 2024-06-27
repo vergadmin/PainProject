@@ -52,14 +52,23 @@
   z-index: 0 !important;
 }
 
-.btn-box{
-  display: flex;
-  flex-direction: row;
-  position: absolute;
-  top: 15px;
-  right: 35px;
+.finish-btn {
+  background-color: var(--crimson) !important;
+  color: var(--cream);
+  position: fixed;
+  bottom: 15px;
+  left: 35px;
 }
 
-.btn-spacing{
-  margin-right: 25px;
+.help-btn {
+  background-color: var(--midnight) !important;
+  color: var(--cream);
+  border-radius: 50%;
+  height: 35px;
+  width: 35px;
+  padding: 9px;
+  margin-left: 25px;
+  position: fixed;
+  top: 15px;
+  right: 35px;
 }
