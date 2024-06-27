@@ -9,10 +9,6 @@ function PatientInfoToggle() {
     setIsExpanded(!isExpanded);
   };
 
-  const tempMessage = () => {
-    alert("We have not implemented this button's functionality yet. Stay tuned! :)")
-  }
-
   return (
     <div className="patient-info-toggle">
       <div className={`box ${isExpanded ? 'expanded' : 'collapsed'}`}>
@@ -28,7 +24,7 @@ function PatientInfoToggle() {
             <div className="expansion-area">
               <div className="row">
                 <img className="profile" src="https://painproject-content.s3.amazonaws.com/images/Rhonda+Moore+Profile.png" alt="Rhonda Moore"/>
-                <div className="col">
+                <div className="col" style={{alignItems: 'flex-start'}}>
                   <p className="info">Age: 24</p>
                   <p className="info">Gender: Female</p>
                 </div>
@@ -46,11 +42,6 @@ function PatientInfoToggle() {
                 <li>Family Medical History</li>
                 <li>How pain affects: Work, Family, Social, Mood, Sleep, Appetite/Weight</li>
               </ul>
-              <hr/>
-              <div className='row'>
-                <button className="important-btn" onClick={tempMessage}>Need Help?</button>
-                <button className="important-btn" onClick={tempMessage}>Finished?</button>
-              </div>
             </div>
           </div>
         ) : (

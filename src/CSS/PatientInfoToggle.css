@@ -8,7 +8,7 @@
   width: 300px;
   cursor: pointer;
   transition: height 0.3s;
-  border-radius: 35px;
+  border-radius: 11px;
   background-color: var(--midnight) !important;
   box-shadow: 9px 9px 11px -3px rgba(0, 0, 0, 0.315);
 }
@@ -40,8 +40,11 @@
 
 .expansion-area {
   background-color: var(--cream);
-  border-radius: 0 0 35px 35px;
+  border-radius: 0 0 11px 11px;
   padding: 19px;
+  max-height: 45vh !important;
+  overflow-y: auto;
+  cursor: default;
 }
 
 .info-top {
@@ -60,3 +63,15 @@ ul {
   text-align: left;
   margin: 5px 0;
 }
+
+ .expansion-area::-webkit-scrollbar {
+  width: 17px;
+}
+
+/* Add a thumb */
+.expansion-area::-webkit-scrollbar-thumb {
+  background: var(--midnight);
+  border-radius: 9px;
+  border: 5px solid var(--cream);
+}
+
