@@ -24,7 +24,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "proxy": "https://patientportal-api.us-east-1.elasticbeanstalk.com/",
+  "proxy": "http://patientportal-api.us-east-1.elasticbeanstalk.com/",
   "eslintConfig": {
     "extends": [
       "react-app",
