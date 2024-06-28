@@ -34,7 +34,7 @@ const Fiction = () => {
     if (checkedItems.every(item => item)) {
       const nextIndex = currentContentIndex + 1;
       if (nextIndex >= contentItems.length) {
-            navigate('/interaction'); // Navigate to /interaction after all content items
+            navigate('/transition'); // Navigate to /interaction after all content items
      } else {
         setCheckedItems(new Array(contentItems[nextIndex].content.length).fill(false)); // Reset checkboxes for the next item
         setCurrentContentIndex(nextIndex);
