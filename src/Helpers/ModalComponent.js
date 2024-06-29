@@ -1,15 +1,13 @@
 // ModalComponent.js
 import React from 'react';
 import '../CSS/ModalComponent.css';
+import { EndSession } from './ConversationLogging';
 
 const ModalComponent = ({ isOpen, type, onClose }) => {
   if (!isOpen) {
     return null;
   }
 
-  const redirect = () => {
-    window.location.href = 'https://www.example.com';
-  };
 
   let content;
 
@@ -21,7 +19,7 @@ const ModalComponent = ({ isOpen, type, onClose }) => {
           <h2>Are you sure?</h2>
           <p>You are about to end your interaction with the virtual patient. If you wish to continue, click the button below.</p>
           <br/>
-          <button className="default-btn" onClick={redirect}>Continue to Post-Survey</button>
+          <button className="default-btn" onClick={EndSession}>Continue to Post-Survey</button>
         </div>
       </div>
     );

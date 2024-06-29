@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import '../CSS/Introduction.css'; // Importing the CSS file
 import { Link } from 'react-router-dom';
+import {baseAPIURL} from '../Helpers/ConversationLogging';
 
 window.addEventListener("load", async() => {
   const urlParams = new URLSearchParams(window.location.search);
@@ -15,7 +16,7 @@ window.addEventListener("load", async() => {
 async function getVisitID(){
   try {
     var participantID = sessionStorage.getItem("participantID");
-    const response = await fetch(`/pain/getParticipantVisitID?participantID=${participantID}`, {
+    const response = await fetch(`${baseAPIURL}/pain/getParticipantVisitID?participantID=${participantID}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
@@ -63,26 +64,6 @@ function Introduction() {
       sessionStorage.setItem("userPrompt", userPrompt);
   };
 
-  async function LogUserInputToDB(){
-    try {
-      const response = await fetch('/pain/logParticipantVisit', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(
-          {participantID : sessionStorage.getItem("participantID"), 
-            visitID : sessionStorage.getItem("visitID"),
-            loginTime : sessionStorage.getItem("loginTime"),
-            userPrompt: sessionStorage.getItem("userPrompt")
-        })
-      });
-      const data = await response.json();
-      console.log(data);
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  }
 
   const handlePrevious = () => {
     setShowNextButton(false);
@@ -124,7 +105,7 @@ function Introduction() {
           {currentContentIndex !== 0 && <button className='default-btn' onClick={handlePrevious}>◄ Previous: {contentItems[currentContentIndex-1].name}</button>}
           <div className={`hide-buttons ${showNextButton ? 'show' : null}`}>
             {currentContentIndex !== contentItems.length - 1 && <button className='default-btn' onClick={handleNext}>Next: {contentItems[currentContentIndex + 1].name} ►</button>}
-            {currentContentIndex === contentItems.length - 1 && <button className='important-btn' onClick={LogUserInputToDB}><Link className="button-link-light" to="/fiction">Continue ►</Link></button>}
+            {currentContentIndex === contentItems.length - 1 && <button className='important-btn'><Link className="button-link-light" to="/fiction">Continue ►</Link></button>}
           </div>
         </div>
       </div>

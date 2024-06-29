@@ -1,6 +1,28 @@
 import React, { useState, useEffect, useRef } from 'react';
 import '../CSS/Introduction.css'; // Importing the CSS file
 import { Link } from 'react-router-dom';
+import {baseAPIURL} from '../Helpers/ConversationLogging';
+
+async function LogUserInputToDB(){
+  try {
+    const response = await fetch(`${baseAPIURL}/pain/logParticipantVisit`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(
+        {participantID : sessionStorage.getItem("participantID"), 
+          visitID : sessionStorage.getItem("visitID"),
+          loginTime : sessionStorage.getItem("loginTime"),
+          userPrompt: sessionStorage.getItem("userPrompt")
+      })
+    });
+    const data = await response.json();
+    console.log(data);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
 
 function Introduction() {
     const [showNextButton, setShowNextButton] = useState(false);
@@ -35,7 +57,7 @@ function Introduction() {
         Your browser does not support the video tag.
       </video> 
         <div className={`hide-buttons ${showNextButton ? 'show' : null}`}>
-          <button className='important-btn'><Link className="button-link-light" to="/interaction">✔ Begin Patient Interaction</Link></button>
+          <button className='important-btn'><Link className="button-link-light" to="/interaction" onClick={LogUserInputToDB}>✔ Begin Patient Interaction</Link></button>
       </div>
     </div>
   );
