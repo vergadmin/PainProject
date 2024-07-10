@@ -1,4 +1,3 @@
-// Interaction.js
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import '../CSS/Interaction.css'; // Importing the CSS file
 import PatientInfoToggle from '../Helpers/PatientInfoToggle';
@@ -13,8 +12,17 @@ function Interaction() {
   const [lastUserMessage, setLastUserMessage] = useState('');
   const [lastSystemResponse, setLastSystemResponse] = useState('');
 
+  const jimThomasID = "e1cca228-50cd-41f6-b372-abbb9fb844a8";
+  const rhondaMooreID = "f2116458-3970-4407-8f5a-b74041399bbe";
+  // Default Set to Rhonda Moore
+  const [chatTitle, setChatTitle] = useState('Rhonda Moore');
+  const [agentID, setAgentID] = useState(rhondaMooreID);
+  const [AWSVideoURLBase, setAWSVideoURLBase] = useState("https://painproject-content.s3.amazonaws.com/")
+  const [idleVideo, setIdleVideo] = useState("https://painproject-content.s3.amazonaws.com/")
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState('');
+
+  const vh = sessionStorage.getItem("vh");
 
   const openModal = (type) => {
     setModalType(type);
@@ -72,22 +80,52 @@ function Interaction() {
       displayName = displayName.replaceAll(" ", "");
       displayName = displayName.replaceAll("/", "_");
       console.log(displayName);
-      const AWSVideoURLBase = "https://painproject-content.s3.amazonaws.com/rhonda-moore-videos/";
       const videoURL = `${AWSVideoURLBase}${displayName}.mp4`;
       if (displayName !== "DefaultWelcomeIntent") {
         changeVideoSource(videoURL);
       }
     });
-  }, [changeVideoSource]);
+  }, [changeVideoSource, AWSVideoURLBase]);
+
+  const setVH = useCallback(() => {
+    // Determine Base URL Videos
+    console.log("Setting VH");
+    var videoCharacter = "";
+    if(vh === "rm") {
+      videoCharacter = "rhonda-moore-videos/"
+      setChatTitle("Rhonda Moore");
+      setAgentID(rhondaMooreID);
+      setIdleVideo("https://painproject-content.s3.amazonaws.com/rhonda-moore-videos/BF_IDLE.mp4");
+    }
+    else if (vh === "jt") {
+      videoCharacter = "jim-thomas-videos/"
+      setChatTitle("Jim Thomas");
+      setAgentID(jimThomasID);
+      setIdleVideo("https://painproject-content.s3.amazonaws.com/jim-thomas-videos/BM_IDLE.mp4");
+    }
+    else {
+      videoCharacter = "rhonda-moore-videos/"
+      setChatTitle("Rhonda Moore");
+      setAgentID(rhondaMooreID);
+      setIdleVideo("https://painproject-content.s3.amazonaws.com/rhonda-moore-videos/BF_IDLE.mp4");
+    }
+    setAWSVideoURLBase("https://painproject-content.s3.amazonaws.com/" + videoCharacter);
+    console.log(agentID)
+    console.log(chatTitle);
+    console.log(AWSVideoURLBase)
+  }, [AWSVideoURLBase, agentID, chatTitle, vh]);
 
   useEffect(() => {
+    setVH();
     responseVideoRef.current = document.getElementById("responseVideo");
     idleVideoRef.current = document.getElementById("idleVideo");
     dfMessengerRef.current = document.querySelector('df-messenger');
     var lastMessage = getLastInteraction();
     LogMessagesToDB(lastMessage);
     fetchSynthesiaVideo();
-  }, [fetchSynthesiaVideo, getLastInteraction]);
+  }, [setVH, fetchSynthesiaVideo, getLastInteraction]);
+  
+  
 
   return (
     <div className="video-background">
@@ -97,7 +135,7 @@ function Interaction() {
         Your browser does not support the video tag.
       </video>
       <video id="idleVideo" className={idleVideoVisibility} autoPlay muted loop>
-        <source src="https://painproject-content.s3.amazonaws.com/rhonda-moore-videos/BF_IDLE.mp4" type="video/mp4" />
+        <source src={idleVideo} type="video/mp4" />
         {/* Add additional source elements for different video formats */}
         Your browser does not support the video tag.
       </video>
@@ -112,8 +150,8 @@ function Interaction() {
         <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
         <df-messenger
           intent="WELCOME"
-          chat-title="vpip-RhondaMoore"
-          agent-id="f2116458-3970-4407-8f5a-b74041399bbe"
+          chat-title={chatTitle}
+          agent-id={agentID}
           language-code="en"
           {...(isMinimized ? { minimize: true } : { expand: true })}
         ></df-messenger>
