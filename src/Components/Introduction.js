@@ -5,8 +5,9 @@ import {baseAPIURL} from '../Helpers/ConversationLogging';
 
 window.addEventListener("load", async() => {
   const urlParams = new URLSearchParams(window.location.search);
-  if(sessionStorage.length < 1 && urlParams.get('participantID') !== null){
+  if(sessionStorage.length < 1 && urlParams.get('participantID') !== null && urlParams.get('vh') !== null){
     sessionStorage.setItem("participantID", urlParams.get('participantID'));
+    sessionStorage.setItem("vh", urlParams.get('vh'));
     var visitID = await getVisitID();
     sessionStorage.setItem("visitID", visitID);
     sessionStorage.setItem("loginTime", new Date().toISOString().slice(0, 19).replace('T', ' '));
