@@ -13,6 +13,7 @@ async function LogUserInputToDB(){
       body: JSON.stringify(
         {participantID : sessionStorage.getItem("participantID"), 
           visitID : sessionStorage.getItem("visitID"),
+          vh : sessionStorage.getItem("vh"),
           loginTime : sessionStorage.getItem("loginTime"),
           userPrompt: sessionStorage.getItem("userPrompt")
       })
