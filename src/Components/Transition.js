@@ -54,7 +54,7 @@ function Introduction() {
       <h1>Final Instructions from Daren</h1>
       <p className="description">Click the video below to hear some final instructions from Daren.</p>
       <video ref={videoRef} height="500" controls>
-        <source src="https://painproject-content.s3.amazonaws.com/didactic-agent/PainProjectTransition.mp4" type="video/mp4" />
+        <source src="https://painproject-content.s3.amazonaws.com/didactic-agent/PatientTransition.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </video> 
         <div className={`hide-buttons ${showNextButton ? 'show' : null}`}>
