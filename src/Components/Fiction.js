@@ -1,11 +1,12 @@
 // Fiction.js
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../CSS/Interaction.css'; // Importing the CSS file
 import '../CSS/Fiction.css'; // Importing the CSS file
 
 const Fiction = () => {
   const contentItems = [
+    { title: "Fiction Contract Introduction", subTitle: "Before interacting with the virtual patient, you will read and sign a Fiction Contract. Click the video below for a brief introduction from Daren.", content: ["https://painproject-content.s3.amazonaws.com/didactic-agent/FictionContractTransition.mp4"]},
     { title: "Training Developer Responsibilities", subTitle: "What will the training developers do?", content: ["Create goal-oriented, practical simulations based on measurable learning objectives.", "Add enough realism to each simulation so the learner receives enough clues to identify and solve a problem.", "Set and maintain an engaging learning environment.", "Foster reflective practice."]},
     { title: "Learner Responsibilities", subTitle: "What do I need to do?", content: ["Suspend judgment of realism for any given simulation in exchange for the promise of learning new and reinforcing existing knowledge and skills.", "Maintain a genuine desire to learn even when suspending disbelief becomes difficult.", "Treat the simulated patients with the same care and respect as an actual patient."] },
     { title: "Top 3 Things to Remember", subTitle: "What should I remember?", content: ["Our Basic Assumption: “We believe that everyone participating in these sessions is intelligent, capable, cares about doing their best, and wants to improve how they care for patients.”", "Areas of strengths and weakness identified by these simulations are intended as constructive feedback, not criticism.", "The “Vegas” Rule – What happens here, stays here. Your responses will NOT be shared outside of this session. All results will be anonymized and pooled before disseminating them to the broader scholarly community."]},
@@ -18,8 +19,30 @@ const Fiction = () => {
     ]
 
   const [currentContentIndex, setCurrentContentIndex] = useState(0);
-
+  const [showNextButton, setShowNextButton] = useState(false);
   const [checkedItems, setCheckedItems] = useState(new Array(contentItems[0].content.length).fill(false));
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    const videoElement = videoRef.current;
+
+    const handleTimeUpdate = () => {
+      if (videoElement) {
+        const timeRemaining = videoElement.duration - videoElement.currentTime;
+        setShowNextButton(timeRemaining <= 5);
+      }
+    };
+
+    if (videoElement) {
+      videoElement.addEventListener('timeupdate', handleTimeUpdate);
+    }
+
+    return () => {
+      if (videoElement) {
+        videoElement.removeEventListener('timeupdate', handleTimeUpdate);
+      }
+    };
+  }, [currentContentIndex]);
   const navigate = useNavigate();
 
   const handleCheckboxChange = (index) => {
@@ -35,49 +58,69 @@ const Fiction = () => {
       const nextIndex = currentContentIndex + 1;
       if (nextIndex >= contentItems.length) {
             navigate('/transition'); // Navigate to /interaction after all content items
-     } else {
+      } else {
         setCheckedItems(new Array(contentItems[nextIndex].content.length).fill(false)); // Reset checkboxes for the next item
         setCurrentContentIndex(nextIndex);
       }
     }
-};
+    if (currentContentIndex === 0) {
+      const nextIndex = currentContentIndex + 1;
+      setCurrentContentIndex(nextIndex);
+    }
+  };
 
   const canProceed = checkedItems.every(item => item);
 
   const { title, subTitle, content } = contentItems[currentContentIndex];
   const { header, subText1, subText2} = headerItems[0];
 
-  return (
-    <div className = 'fiction'>
-      <h1>{header}</h1>
-      <div className="info-box">
-      <p className="fiction-description">{subText1}</p>
-      <p className="fiction-description">{subText2}</p>
-      </div>
-      <h2 style={{ marginBottom: '0px'}}>{title}</h2>
-      <h3>{subTitle}</h3>
-      <div className='checkbox-area'>
-        {content.map((item, index) => (
-          <div key={index} className="checkbox-container">
-            <input
-              type="checkbox"
-              className="checkbox-input"
-              checked={checkedItems[index]}
-              onChange={() => handleCheckboxChange(index)}
-            />
-            <label className="checkbox-label">
-              {item}
-            </label>
+  if (currentContentIndex === 0) {
+    return (
+      <div className = 'fiction'>
+        <h1>{header}</h1>
+        <p className="description">{contentItems[0]['subTitle']}</p>
+        <video  ref={videoRef} key={contentItems[currentContentIndex].src} height="500" controls>
+          <source src={contentItems[0].content[0]} type="video/mp4" />
+          Your browser does not support the video tag.
+        </video> 
+        <div className={`hide-buttons ${showNextButton ? 'show' : null}`}>
+            <button className='default-btn' onClick={handleNext}>Next: {contentItems[currentContentIndex + 1].name} ►</button>
           </div>
-        ))}
       </div>
-      <br/>
-      <p>Please check all boxes above to continue.</p>
-      <button onClick={handleNext} className = "default-btn" disabled={!canProceed}>
-        Next
-      </button>
-    </div>
-  );
+    );
+  } else {
+    return (
+      <div className = 'fiction'>
+        <h1>{header}</h1>
+        <div className="info-box">
+        <p className="fiction-description">{subText1}</p>
+        <p className="fiction-description">{subText2}</p>
+        </div>
+        <h2 style={{ marginBottom: '0px'}}>{title}</h2>
+        <h3>{subTitle}</h3>
+        <div className='checkbox-area'>
+          {content.map((item, index) => (
+            <div key={index} className="checkbox-container">
+              <input
+                type="checkbox"
+                className="checkbox-input"
+                checked={checkedItems[index]}
+                onChange={() => handleCheckboxChange(index)}
+              />
+              <label className="checkbox-label">
+                {item}
+              </label>
+            </div>
+          ))}
+        </div>
+        <br/>
+        <p>Please check all boxes above to continue.</p>
+        <button onClick={handleNext} className = "default-btn" disabled={!canProceed}>
+          Next
+        </button>
+      </div>
+    );
+  }
 };
 
 
