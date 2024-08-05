@@ -5,20 +5,20 @@ import ModalComponent from '../Helpers/ModalComponent';
 import { LogMessagesToDB } from '../Helpers/ConversationLogging';
 
 function Interaction() {
+  const [idleVideo, setIdleVideo] = useState("https://painproject-content.s3.amazonaws.com/rhonda-moore-videos/BF_IDLE.mp4");
   const [responseVideoSrc, setResponseVideoSrc] = useState('');
-  const [responseVideoVisibility, setResponseVideoVisibility] = useState('hide');
-  const [idleVideoVisibility, setIdleVideoVisibility] = useState('show');
+  const [responseVideoVisibility, setResponseVideoVisibility] = useState('hide-interaction');
+  const [idleVideoVisibility, setIdleVideoVisibility] = useState('show-interaction');
   const [isMinimized, setIsMinimized] = useState(false);
   const [lastUserMessage, setLastUserMessage] = useState('');
   const [lastSystemResponse, setLastSystemResponse] = useState('');
 
   const jimThomasID = "e1cca228-50cd-41f6-b372-abbb9fb844a8";
   const rhondaMooreID = "f2116458-3970-4407-8f5a-b74041399bbe";
-  // Default Set to Rhonda Moore
+  // // Default Set to Rhonda Moore
   const [chatTitle, setChatTitle] = useState('Rhonda Moore');
   const [agentID, setAgentID] = useState(rhondaMooreID);
   const [AWSVideoURLBase, setAWSVideoURLBase] = useState("https://painproject-content.s3.amazonaws.com/")
-  const [idleVideo, setIdleVideo] = useState("https://painproject-content.s3.amazonaws.com/")
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState('');
 
@@ -45,8 +45,8 @@ function Interaction() {
   const changeVideoSource = useCallback((newSrc) => {
     console.log("TRIGGERED", newSrc);
     setResponseVideoSrc(newSrc);
-    setResponseVideoVisibility('show');
-    setIdleVideoVisibility('hide');
+    setResponseVideoVisibility('show-interaction');
+    setIdleVideoVisibility('hide-interaction');
     console.log("RESPONSE VIDEO:", responseVideoRef.current);
     console.log("IDLE VIDEO:", idleVideoRef.current);
     toggleMinimize(true);
@@ -54,8 +54,8 @@ function Interaction() {
 
   const switchToIdle = () => {
     console.log("SWITCHING BACK TO IDLE");
-    setResponseVideoVisibility('hide');
-    setIdleVideoVisibility('show');
+    setResponseVideoVisibility('hide-interaction');
+    setIdleVideoVisibility('show-interaction');
     toggleMinimize(false);
   };
 
@@ -107,7 +107,6 @@ function Interaction() {
       videoCharacter = "rhonda-moore-videos/"
       setChatTitle("Rhonda Moore");
       setAgentID(rhondaMooreID);
-      setIdleVideo("https://painproject-content.s3.amazonaws.com/rhonda-moore-videos/BF_IDLE.mp4");
     }
     setAWSVideoURLBase("https://painproject-content.s3.amazonaws.com/" + videoCharacter);
     console.log(agentID)
@@ -125,22 +124,17 @@ function Interaction() {
     fetchSynthesiaVideo();
   }, [setVH, fetchSynthesiaVideo, getLastInteraction]);
   
-  
-
   return (
     <div className="video-background">
       <video id="responseVideo" className={responseVideoVisibility} key={responseVideoSrc} onEnded={switchToIdle} autoPlay>
         <source src={responseVideoSrc} type="video/mp4" />
-        {/* Add additional source elements for different video formats */}
         Your browser does not support the video tag.
       </video>
       <video id="idleVideo" className={idleVideoVisibility} autoPlay muted loop>
         <source src={idleVideo} type="video/mp4" />
-        {/* Add additional source elements for different video formats */}
         Your browser does not support the video tag.
       </video>
       <div className="content-overlay">
-        {/* Add your content here */}
         <button className="finish-btn" onClick={() => openModal('finished')}>Finished?</button>
         <button className="help-btn" onClick={() => openModal('help')}>?</button>
 

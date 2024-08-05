@@ -45,11 +45,11 @@
     text-align: left;
 }
 
-.hide {
+.hide-interaction {
   z-index: -1 !important;
 }
 
-.show {
+.show-interaction {
   z-index: 0 !important;
 }
 
