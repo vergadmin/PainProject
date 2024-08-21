@@ -25,6 +25,14 @@ h1, p, video, button {
   margin: 7px 0px;
 }
 
+video {
+  width: 65%;
+  border-radius: 15px;
+  -webkit-box-shadow: 0px 17px 50px -25px rgba(0,0,0,0.55);
+  -moz-box-shadow: 0px 17px 50px -25px rgba(0,0,0,0.55);
+  box-shadow: 0px 17px 50px -25px rgba(0,0,0,0.55);
+}
+
 h1 {
   color: var(--crimson);
   font-size: 25px !important;
@@ -101,4 +109,17 @@ button:hover {
 
 hr {
   margin: 25px 0;
+}
+
+.pulse {
+  animation: pulse-animation 2s infinite;
+}
+
+@keyframes pulse-animation {
+  0% {
+      box-shadow: 0 0 0 0px rgba(0, 0, 0, 0.2);
+  }
+  100% {
+      box-shadow: 0 0 0 20px rgba(0, 0, 0, 0);
+  }
 }

@@ -3,14 +3,38 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../CSS/Interaction.css'; // Importing the CSS file
 import '../CSS/Fiction.css'; // Importing the CSS file
+import { Link } from 'react-router-dom';
+import {baseAPIURL} from '../Helpers/ConversationLogging';
+
+async function LogUserInputToDB(){
+  try {
+    const response = await fetch(`${baseAPIURL}/pain/logParticipantVisit`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(
+        {participantID : sessionStorage.getItem("participantID"), 
+          visitID : sessionStorage.getItem("visitID"),
+          vh : sessionStorage.getItem("vh"),
+          loginTime : sessionStorage.getItem("loginTime"),
+          userPrompt: sessionStorage.getItem("userPrompt")
+      })
+    });
+    const data = await response.json();
+    console.log(data);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
 
 const Fiction = () => {
   const contentItems = [
-    { title: "Fiction Contract Introduction", subTitle: "Before interacting with the virtual patient, you will read and sign a Fiction Contract. Click the video below for a brief introduction from Daren.", content: ["https://painproject-content.s3.amazonaws.com/didactic-agent/FictionContractTransition.mp4"]},
     { title: "Training Developer Responsibilities", subTitle: "What will the training developers do?", content: ["Create goal-oriented, practical simulations based on measurable learning objectives.", "Add enough realism to each simulation so the learner receives enough clues to identify and solve a problem.", "Set and maintain an engaging learning environment.", "Foster reflective practice."]},
     { title: "Learner Responsibilities", subTitle: "What do I need to do?", content: ["Suspend judgment of realism for any given simulation in exchange for the promise of learning new and reinforcing existing knowledge and skills.", "Maintain a genuine desire to learn even when suspending disbelief becomes difficult.", "Treat the simulated patients with the same care and respect as an actual patient."] },
     { title: "Top 3 Things to Remember", subTitle: "What should I remember?", content: ["Our Basic Assumption: “We believe that everyone participating in these sessions is intelligent, capable, cares about doing their best, and wants to improve how they care for patients.”", "Areas of strengths and weakness identified by these simulations are intended as constructive feedback, not criticism.", "The “Vegas” Rule – What happens here, stays here. Your responses will NOT be shared outside of this session. All results will be anonymized and pooled before disseminating them to the broader scholarly community."]},
-    { title: "Are you ready to begin?", subTitle: "", content: ["I'm ready to begin!"]}
+    { title: "Are you ready to begin?", subTitle: "", content: ["I'm ready to begin!"]},
+    { title: "Final Instructions from Daren", subTitle: "You are about to interact with the virtual patient. Here are some final instructions from Daren.", content: ["https://painproject-content.s3.amazonaws.com/didactic-agent/PatientTransition.mp4"]}
 ];
 
     const headerItems = [
@@ -74,18 +98,18 @@ const Fiction = () => {
   const { title, subTitle, content } = contentItems[currentContentIndex];
   const { header, subText1, subText2} = headerItems[0];
 
-  if (currentContentIndex === 0) {
+  if (currentContentIndex === (contentItems.length - 1)) {
     return (
       <div className = 'fiction'>
-        <h1>{header}</h1>
-        <p className="description">{contentItems[0]['subTitle']}</p>
-        <video  ref={videoRef} key={contentItems[currentContentIndex].src} height="500" controls>
-          <source src={contentItems[0].content[0]} type="video/mp4" />
+        <h1>{contentItems[currentContentIndex]['title']}</h1>
+        <p className="description">{contentItems[currentContentIndex]['subTitle']}</p>
+        <video autoPlay ref={videoRef} key={contentItems[currentContentIndex].src} controls>
+          <source src={contentItems[currentContentIndex].content[0]} type="video/mp4" />
           Your browser does not support the video tag.
         </video> 
         <div className={`hide-buttons ${showNextButton ? 'show' : null}`}>
-            <button className='default-btn' onClick={handleNext}>Next: {contentItems[currentContentIndex + 1].name} ►</button>
-          </div>
+          <button className='important-btn pulse'><Link className="button-link-light" to="/interaction" onClick={LogUserInputToDB}>✔ Begin Patient Interaction</Link></button>
+        </div>
       </div>
     );
   } else {
