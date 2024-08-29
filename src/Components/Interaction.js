@@ -5,7 +5,7 @@ import ModalComponent from '../Helpers/ModalComponent';
 import { LogMessagesToDB } from '../Helpers/ConversationLogging';
 
 function Interaction() {
-  const [idleVideo, setIdleVideo] = useState("https://painproject-content.s3.amazonaws.com/rhonda-moore-videos/BF_IDLE.mp4");
+  const [idleVideo, setIdleVideo] = useState('');
   const [responseVideoSrc, setResponseVideoSrc] = useState('');
   const [responseVideoVisibility, setResponseVideoVisibility] = useState('hide-interaction');
   const [idleVideoVisibility, setIdleVideoVisibility] = useState('show-interaction');
@@ -23,6 +23,7 @@ function Interaction() {
   const [modalType, setModalType] = useState('');
 
   const vh = sessionStorage.getItem("vh");
+  console.log(sessionStorage)
 
   const openModal = (type) => {
     setModalType(type);
@@ -69,23 +70,25 @@ function Interaction() {
   }, [lastUserMessage, lastSystemResponse]);
   
   const fetchSynthesiaVideo = useCallback(() => {
-    dfMessengerRef.current.addEventListener('df-response-received', (event) => {
-      const userMessage = event.detail.response.queryResult.queryText;
-      const systemResponse = event.detail.response.queryResult.fulfillmentText;
-
-      setLastUserMessage(userMessage);
-      setLastSystemResponse(systemResponse);
-
-      let displayName = event.detail.response.queryResult.intent.displayName;
-      displayName = displayName.replaceAll(" ", "");
-      displayName = displayName.replaceAll("/", "_");
-      console.log(displayName);
-      const videoURL = `${AWSVideoURLBase}${displayName}.mp4`;
-      if (displayName !== "DefaultWelcomeIntent") {
-        changeVideoSource(videoURL);
-      }
-    });
-  }, [changeVideoSource, AWSVideoURLBase]);
+    if (idleVideo !== '') {
+      dfMessengerRef.current.addEventListener('df-response-received', (event) => {
+        const userMessage = event.detail.response.queryResult.queryText;
+        const systemResponse = event.detail.response.queryResult.fulfillmentText;
+  
+        setLastUserMessage(userMessage);
+        setLastSystemResponse(systemResponse);
+  
+        let displayName = event.detail.response.queryResult.intent.displayName;
+        displayName = displayName.replaceAll(" ", "");
+        displayName = displayName.replaceAll("/", "_");
+        console.log(displayName);
+        const videoURL = `${AWSVideoURLBase}${displayName}.mp4`;
+        if (displayName !== "DefaultWelcomeIntent") {
+          changeVideoSource(videoURL);
+        }
+      });
+    }
+  }, [changeVideoSource, AWSVideoURLBase, idleVideo]);
 
   const setVH = useCallback(() => {
     // Determine Base URL Videos
@@ -112,46 +115,54 @@ function Interaction() {
     console.log(agentID)
     console.log(chatTitle);
     console.log(AWSVideoURLBase)
-  }, [AWSVideoURLBase, agentID, chatTitle, vh]);
-
-  useEffect(() => {
-    setVH();
     responseVideoRef.current = document.getElementById("responseVideo");
     idleVideoRef.current = document.getElementById("idleVideo");
     dfMessengerRef.current = document.querySelector('df-messenger');
     var lastMessage = getLastInteraction();
     LogMessagesToDB(lastMessage);
     fetchSynthesiaVideo();
-  }, [setVH, fetchSynthesiaVideo, getLastInteraction]);
+  }, [fetchSynthesiaVideo, getLastInteraction, AWSVideoURLBase, agentID, chatTitle, vh]);
+
+  useEffect(() => {
+    setVH();
+    // responseVideoRef.current = document.getElementById("responseVideo");
+    // idleVideoRef.current = document.getElementById("idleVideo");
+    // dfMessengerRef.current = document.querySelector('df-messenger');
+    // var lastMessage = getLastInteraction();
+    // LogMessagesToDB(lastMessage);
+    // fetchSynthesiaVideo();
+  }, [setVH]);
   
-  return (
-    <div className="video-background">
-      <video id="responseVideo" className={responseVideoVisibility} key={responseVideoSrc} onEnded={switchToIdle} autoPlay>
-        <source src={responseVideoSrc} type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
-      <video id="idleVideo" className={idleVideoVisibility} autoPlay muted loop>
-        <source src={idleVideo} type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
-      <div className="content-overlay">
-        <button className="finish-btn" onClick={() => openModal('finished')}>Finished?</button>
-        <button className="help-btn" onClick={() => openModal('help')}>?</button>
-
-        <ModalComponent isOpen={isModalOpen} type={modalType} onClose={closeModal} />
-
-        <PatientInfoToggle />
-        <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
-        <df-messenger
-          intent="WELCOME"
-          chat-title={chatTitle}
-          agent-id={agentID}
-          language-code="en"
-          {...(isMinimized ? { minimize: true } : { expand: true })}
-        ></df-messenger>
+  if (idleVideo !== '') {
+    return (
+      <div className="video-background">
+        <video id="responseVideo" className={responseVideoVisibility} key={responseVideoSrc} onEnded={switchToIdle} autoPlay>
+          <source src={responseVideoSrc} type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        <video id="idleVideo" className={idleVideoVisibility} autoPlay muted loop>
+          <source src={idleVideo} type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        <div className="content-overlay">
+          <button className="finish-btn" onClick={() => openModal('finished')}>Finished?</button>
+          <button className="help-btn" onClick={() => openModal('help')}>?</button>
+  
+          <ModalComponent isOpen={isModalOpen} type={modalType} onClose={closeModal} />
+  
+          <PatientInfoToggle />
+          <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+          <df-messenger
+            intent="WELCOME"
+            chat-title={chatTitle}
+            agent-id={agentID}
+            language-code="en"
+            {...(isMinimized ? { minimize: true } : { expand: true })}
+          ></df-messenger>
+        </div>
       </div>
-    </div>
-  );
-}
+    );
+  }
+  }
 
 export default Interaction;

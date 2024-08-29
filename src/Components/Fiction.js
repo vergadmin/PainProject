@@ -46,6 +46,8 @@ const Fiction = () => {
   const [showNextButton, setShowNextButton] = useState(false);
   const [checkedItems, setCheckedItems] = useState(new Array(contentItems[0].content.length).fill(false));
   const videoRef = useRef(null);
+  console.log(sessionStorage)
+
 
   useEffect(() => {
     const videoElement = videoRef.current;
