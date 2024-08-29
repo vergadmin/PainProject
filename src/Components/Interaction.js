@@ -3,6 +3,32 @@ import '../CSS/Interaction.css'; // Importing the CSS file
 import PatientInfoToggle from '../Helpers/PatientInfoToggle';
 import ModalComponent from '../Helpers/ModalComponent';
 import { LogMessagesToDB } from '../Helpers/ConversationLogging';
+import { Link } from 'react-router-dom';
+
+window.addEventListener("load", async() => {
+  if(sessionStorage.getItem("interventionStartTime") === null){
+    sessionStorage.setItem("interventionStartTime", new Date());
+  }
+});
+
+function disableDfMessengerInput() {
+  // Get the df-messenger component
+  const dfMessenger = document.querySelector('df-messenger');
+
+  // Check if df-messenger is found
+  if (dfMessenger) {
+      // Access the shadow DOM of the df-messenger
+      const shadowRoot = dfMessenger.shadowRoot;
+      // Find the input box inside the shadow DOM
+      const inputBox = shadowRoot.querySelector('input[type="text"]');
+      console.log(inputBox)
+      // Disable the input box
+      if (inputBox) {
+          inputBox.disabled = true;
+      }
+  }
+}
+
 
 function Interaction() {
   const [idleVideo, setIdleVideo] = useState('');
@@ -23,7 +49,7 @@ function Interaction() {
   const [modalType, setModalType] = useState('');
 
   const vh = sessionStorage.getItem("vh");
-  console.log(sessionStorage)
+  PatientTimer();
 
   const openModal = (type) => {
     setModalType(type);
@@ -90,6 +116,30 @@ function Interaction() {
     }
   }, [changeVideoSource, AWSVideoURLBase, idleVideo]);
 
+  function PatientTimer() {
+    useEffect(() => {
+      const intervalId = setInterval(() => {
+        var TimeElapsed = (new Date() - new Date(sessionStorage.getItem("interventionStartTime")))/1000;
+        console.log('Time Elapsed (seconds):', TimeElapsed);
+  
+        if(TimeElapsed > 300){
+          var ContinueButton = document.getElementById("continueButton");
+          ContinueButton.style.display = "block";
+          }
+        if(TimeElapsed > 600){
+          disableDfMessengerInput();
+        }
+        if(TimeElapsed > 539 && TimeElapsed < 541){
+          openModal('oneMinuteReminder');
+        }
+        // Add any other logic you want to execute every second here
+      }, 1000);
+  
+      // Cleanup interval on component unmount
+      return () => clearInterval(intervalId);
+    }, []); // The empty dependency array ensures this runs only once, when the component mounts
+  }
+
   const setVH = useCallback(() => {
     // Determine Base URL Videos
     console.log("Setting VH");
@@ -145,8 +195,10 @@ function Interaction() {
           Your browser does not support the video tag.
         </video>
         <div className="content-overlay">
-          <button className="finish-btn" onClick={() => openModal('finished')}>Finished?</button>
-          <button className="help-btn" onClick={() => openModal('help')}>?</button>
+          <button id="continueButton" className="continue-btn"><Link className="button-link-light" to="/Transition">Continue</Link></button>
+          <div className="btn-list" style={{display:"flex"}}>
+            <button className="help-btn" onClick={() => openModal('help')}>?</button>
+          </div>
   
           <ModalComponent isOpen={isModalOpen} type={modalType} onClose={closeModal} />
   
