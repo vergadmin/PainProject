@@ -1,5 +1,5 @@
-export const baseAPIURL = "";
-// export const baseAPIURL = "http://patientportal-api.us-east-1.elasticbeanstalk.com";
+// export const baseAPIURL = "";
+export const baseAPIURL = "http://patientportal-api.us-east-1.elasticbeanstalk.com";
 
 
 export async function LogMessagesToDB(inputConversation){

@@ -12,21 +12,10 @@ window.addEventListener("load", async() => {
 });
 
 function disableDfMessengerInput() {
-  // Get the df-messenger component
-  const dfMessenger = document.querySelector('df-messenger');
-
-  // Check if df-messenger is found
-  if (dfMessenger) {
-      // Access the shadow DOM of the df-messenger
-      const shadowRoot = dfMessenger.shadowRoot;
-      // Find the input box inside the shadow DOM
-      const inputBox = shadowRoot.querySelector('input[type="text"]');
-      console.log(inputBox)
-      // Disable the input box
-      if (inputBox) {
-          inputBox.disabled = true;
-      }
-  }
+  let plswork = document.querySelector("#root > div > div > df-messenger").shadowRoot.querySelector("div > df-messenger-chat").shadowRoot.querySelector("div > df-messenger-user-input").shadowRoot.querySelector("div > div.input-box-wrapper > input[type=text]")
+  plswork.disabled = "true"
+  plswork.style.opacity = '0.5';
+  plswork.style.cursor = 'not-allowed';
 }
 
 
@@ -175,12 +164,7 @@ function Interaction() {
 
   useEffect(() => {
     setVH();
-    // responseVideoRef.current = document.getElementById("responseVideo");
-    // idleVideoRef.current = document.getElementById("idleVideo");
-    // dfMessengerRef.current = document.querySelector('df-messenger');
-    // var lastMessage = getLastInteraction();
-    // LogMessagesToDB(lastMessage);
-    // fetchSynthesiaVideo();
+
   }, [setVH]);
   
   if (idleVideo !== '') {
