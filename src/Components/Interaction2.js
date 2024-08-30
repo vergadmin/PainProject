@@ -55,6 +55,9 @@ function Interaction2() {
   const changeVideoSource = useCallback((newSrc) => {
     console.log("TRIGGERED", newSrc);
     setResponseVideoSrc(newSrc);
+    if (responseVideoRef.current) {
+      responseVideoRef.current.load();
+    }
     setResponseVideoVisibility('show-interaction');
     setIdleVideoVisibility('hide-interaction');
     console.log("RESPONSE VIDEO:", responseVideoRef.current);
