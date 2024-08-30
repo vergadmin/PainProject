@@ -2,8 +2,8 @@ import React, { useEffect, useState, useRef, useCallback } from 'react';
 import '../CSS/Interaction.css'; // Importing the CSS file
 import PatientInfoToggle from '../Helpers/PatientInfoToggle';
 import ModalComponent from '../Helpers/ModalComponent';
-import { EndSession, LogMessagesToDB } from '../Helpers/ConversationLogging';
-import { Link } from 'react-router-dom';
+import {LogMessagesToDB } from '../Helpers/ConversationLogging';
+// import { Link } from 'react-router-dom';
 
 function disableDfMessengerInput() {
   let plswork = document.querySelector("#root > div > div > df-messenger").shadowRoot.querySelector("div > df-messenger-chat").shadowRoot.querySelector("div > df-messenger-user-input").shadowRoot.querySelector("div > div.input-box-wrapper > input[type=text]")
@@ -13,7 +13,7 @@ function disableDfMessengerInput() {
 }
 
 
-function Interaction() {
+function Interaction2() {
   const [idleVideo, setIdleVideo] = useState('');
   const [responseVideoSrc, setResponseVideoSrc] = useState('');
   const [responseVideoVisibility, setResponseVideoVisibility] = useState('hide-interaction');
@@ -77,16 +77,16 @@ function Interaction() {
     };
     return interaction;
   }, [lastUserMessage, lastSystemResponse]);
-  
+
   const fetchSynthesiaVideo = useCallback(() => {
     if (idleVideo !== '') {
       dfMessengerRef.current.addEventListener('df-response-received', (event) => {
         const userMessage = event.detail.response.queryResult.queryText;
         const systemResponse = event.detail.response.queryResult.fulfillmentText;
-  
+
         setLastUserMessage(userMessage);
         setLastSystemResponse(systemResponse);
-  
+
         let displayName = event.detail.response.queryResult.intent.displayName;
         displayName = displayName.replaceAll(" ", "");
         displayName = displayName.replaceAll("/", "_");
@@ -102,8 +102,10 @@ function Interaction() {
   function PatientTimer() {
     useEffect(() => {
       const intervalId = setInterval(() => {
+
         if(sessionStorage.getItem("interventionStartTime") !== null){
           var TimeElapsed = (new Date() - new Date(sessionStorage.getItem("interventionStartTime")))/1000;
+          
           console.log('Time Elapsed (seconds):', TimeElapsed);
 
           if (TimeElapsed > 300) {
@@ -121,7 +123,7 @@ function Interaction() {
         }
         // Add any other logic you want to execute every second here
       }, 1000);
-  
+
       // Cleanup interval on component unmount
       return () => clearInterval(intervalId);
     }, []); // The empty dependency array ensures this runs only once, when the component mounts
@@ -131,7 +133,7 @@ function Interaction() {
     // Determine Base URL Videos
     console.log("Setting VH");
     var videoCharacter = "";
-    if(vh === "rm") {
+    if (vh === "rm") {
       videoCharacter = "rhonda-moore-videos/"
       setChatTitle("Rhonda Moore");
       setAgentID(rhondaMooreID);
@@ -172,7 +174,7 @@ function Interaction() {
       sessionStorage.setItem("interventionStartTime", new Date());
     }
   }, [setVH]);
-  
+
   if (idleVideo !== '') {
     return (
       <div className="video-background">
@@ -185,13 +187,13 @@ function Interaction() {
           Your browser does not support the video tag.
         </video>
         <div className="content-overlay">
-        <Link className="button-link-light" to="/Transition"  onClick={() => EndSession()}><button id="continueButton" className="continue-btn">Continue</button></Link>
+          <button id="continueButton" className="finish-btn" onClick={() => openModal('finished')}>Finished?</button>
           <div className="btn-list" style={{display:"flex"}}>
             <button className="help-btn" onClick={() => openModal('help')}>?</button>
           </div>
-  
+
           <ModalComponent isOpen={isModalOpen} type={modalType} onClose={closeModal} />
-  
+
           <PatientInfoToggle />
           <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
           <df-messenger
@@ -205,6 +207,6 @@ function Interaction() {
       </div>
     );
   }
-  }
+}
 
-export default Interaction;
+export default Interaction2;

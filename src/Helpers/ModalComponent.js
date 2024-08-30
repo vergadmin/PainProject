@@ -19,11 +19,24 @@ const ModalComponent = ({ isOpen, type, onClose }) => {
           <h2>Are you sure?</h2>
           <p>You are about to end your interaction with the virtual patient. If you wish to continue, click the button below.</p>
           <br/>
-          <button className="default-btn" onClick={EndSession}>Continue to Post-Survey</button>
+          <button className="default-btn" onClick={() => EndSession()}>Continue to Post-Survey</button>
         </div>
       </div>
     );
-  } else {
+  }
+  else if(type === 'oneMinuteReminder'){
+    content = (
+      <div className="modal-overlay">
+        <div className="modal">
+          <button className="close-btn" onClick={onClose}>×</button>
+          <h2>Your Session with patient is about to end</h2> {/* Change this to any other content you need */}
+          <p>Hey, you have one minute remaining to interact with the paitent.</p>
+          <br/>
+        </div>
+      </div>
+    );
+  }
+   else {
     content = (
       <div className="modal-overlay">
         <div className="modal">
