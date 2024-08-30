@@ -19,7 +19,7 @@ const ModalComponent = ({ isOpen, type, onClose }) => {
           <h2>Are you sure?</h2>
           <p>You are about to end your interaction with the virtual patient. If you wish to continue, click the button below.</p>
           <br/>
-          <button className="default-btn" onClick={EndSession}>Continue to Post-Survey</button>
+          <button className="default-btn" onClick={() => EndSession()}>Continue to Post-Survey</button>
         </div>
       </div>
     );

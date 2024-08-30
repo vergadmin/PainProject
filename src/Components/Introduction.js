@@ -17,7 +17,8 @@ window.addEventListener("load", async() => {
 async function getVisitID(){
   try {
     var participantID = sessionStorage.getItem("participantID");
-    const response = await fetch(`${baseAPIURL}/pain/getParticipantVisitID?participantID=${participantID}`, {
+    var vhType = sessionStorage.getItem('vh');
+    const response = await fetch(`${baseAPIURL}/pain/getParticipantVisitID?participantID=${participantID}&vh=${vhType}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'

@@ -2,14 +2,8 @@ import React, { useEffect, useState, useRef, useCallback } from 'react';
 import '../CSS/Interaction.css'; // Importing the CSS file
 import PatientInfoToggle from '../Helpers/PatientInfoToggle';
 import ModalComponent from '../Helpers/ModalComponent';
-import { LogMessagesToDB } from '../Helpers/ConversationLogging';
+import { EndSession, LogMessagesToDB } from '../Helpers/ConversationLogging';
 import { Link } from 'react-router-dom';
-
-window.addEventListener("load", async() => {
-  if(sessionStorage.getItem("interventionStartTime") === null){
-    sessionStorage.setItem("interventionStartTime", new Date());
-  }
-});
 
 function disableDfMessengerInput() {
   let plswork = document.querySelector("#root > div > div > df-messenger").shadowRoot.querySelector("div > df-messenger-chat").shadowRoot.querySelector("div > df-messenger-user-input").shadowRoot.querySelector("div > div.input-box-wrapper > input[type=text]")
@@ -108,18 +102,22 @@ function Interaction() {
   function PatientTimer() {
     useEffect(() => {
       const intervalId = setInterval(() => {
-        var TimeElapsed = (new Date() - new Date(sessionStorage.getItem("interventionStartTime")))/1000;
-        console.log('Time Elapsed (seconds):', TimeElapsed);
-  
-        if(TimeElapsed > 300){
-          var ContinueButton = document.getElementById("continueButton");
-          ContinueButton.style.display = "block";
+        if(sessionStorage.getItem("interventionStartTime") !== null){
+          var TimeElapsed = (new Date() - new Date(sessionStorage.getItem("interventionStartTime")))/1000;
+          console.log('Time Elapsed (seconds):', TimeElapsed);
+
+          if (TimeElapsed > 300) {
+            var ContinueButton = document.getElementById("continueButton");
+            if (ContinueButton !== null) {
+              ContinueButton.style.display = "block";
+            }
           }
-        if(TimeElapsed > 600){
-          disableDfMessengerInput();
-        }
-        if(TimeElapsed > 539 && TimeElapsed < 541){
-          openModal('oneMinuteReminder');
+          if (TimeElapsed > 600) {
+            disableDfMessengerInput();
+          }
+          if (TimeElapsed > 539 && TimeElapsed < 541) {
+            openModal('oneMinuteReminder');
+          }
         }
         // Add any other logic you want to execute every second here
       }, 1000);
@@ -164,7 +162,15 @@ function Interaction() {
 
   useEffect(() => {
     setVH();
-
+    // responseVideoRef.current = document.getElementById("responseVideo");
+    // idleVideoRef.current = document.getElementById("idleVideo");
+    // dfMessengerRef.current = document.querySelector('df-messenger');
+    // var lastMessage = getLastInteraction();
+    // LogMessagesToDB(lastMessage);
+    // fetchSynthesiaVideo();
+    if(sessionStorage.getItem("interventionStartTime") === null && sessionStorage.length >= 1 ){
+      sessionStorage.setItem("interventionStartTime", new Date());
+    }
   }, [setVH]);
   
   if (idleVideo !== '') {
@@ -179,7 +185,7 @@ function Interaction() {
           Your browser does not support the video tag.
         </video>
         <div className="content-overlay">
-          <button id="continueButton" className="continue-btn"><Link className="button-link-light" to="/Transition">Continue</Link></button>
+        <Link className="button-link-light" to="/Transition"  onClick={() => EndSession()}><button id="continueButton" className="continue-btn">Continue</button></Link>
           <div className="btn-list" style={{display:"flex"}}>
             <button className="help-btn" onClick={() => openModal('help')}>?</button>
           </div>

@@ -4,29 +4,30 @@ import { useNavigate } from 'react-router-dom';
 import '../CSS/Interaction.css'; // Importing the CSS file
 import '../CSS/Fiction.css'; // Importing the CSS file
 import { Link } from 'react-router-dom';
-import {baseAPIURL} from '../Helpers/ConversationLogging';
+// import {baseAPIURL} from '../Helpers/ConversationLogging';
+import {LogUserInputToDB} from '../Helpers/ConversationLogging';
 
-async function LogUserInputToDB(){
-  try {
-    const response = await fetch(`${baseAPIURL}/pain/logParticipantVisit`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(
-        {participantID : sessionStorage.getItem("participantID"), 
-          visitID : sessionStorage.getItem("visitID"),
-          vh : sessionStorage.getItem("vh"),
-          loginTime : sessionStorage.getItem("loginTime"),
-          userPrompt: sessionStorage.getItem("userPrompt")
-      })
-    });
-    const data = await response.json();
-    console.log(data);
-  } catch (error) {
-    console.error('Error:', error);
-  }
-}
+// async function LogUserInputToDB(){
+//   try {
+//     const response = await fetch(`${baseAPIURL}/pain/logParticipantVisit`, {
+//       method: 'POST',
+//       headers: {
+//         'Content-Type': 'application/json'
+//       },
+//       body: JSON.stringify(
+//         {participantID : sessionStorage.getItem("participantID"), 
+//           visitID : sessionStorage.getItem("visitID"),
+//           vh : sessionStorage.getItem("vh"),
+//           loginTime : sessionStorage.getItem("loginTime"),
+//           userPrompt: sessionStorage.getItem("userPrompt")
+//       })
+//     });
+//     const data = await response.json();
+//     console.log(data);
+//   } catch (error) {
+//     console.error('Error:', error);
+//   }
+// }
 
 const Fiction = () => {
   const contentItems = [
@@ -110,7 +111,7 @@ const Fiction = () => {
           Your browser does not support the video tag.
         </video> 
         <div className={`hide-buttons ${showNextButton ? 'show' : null}`}>
-          <button className='important-btn pulse'><Link className="button-link-light" to="/interaction" onClick={LogUserInputToDB}>✔ Begin Patient Interaction</Link></button>
+          <button className='important-btn pulse'><Link className="button-link-light" to="/interaction" onClick={() => LogUserInputToDB()}>✔ Begin Patient Interaction</Link></button>
         </div>
       </div>
     );
