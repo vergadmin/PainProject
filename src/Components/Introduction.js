@@ -3,17 +3,6 @@ import '../CSS/Introduction.css'; // Importing the CSS file
 import { Link } from 'react-router-dom';
 import {baseAPIURL} from '../Helpers/ConversationLogging';
 
-window.addEventListener("load", async() => {
-  const urlParams = new URLSearchParams(window.location.search);
-  if(sessionStorage.length < 1 && urlParams.get('participantID') !== null && urlParams.get('vh') !== null){
-    sessionStorage.setItem("participantID", urlParams.get('participantID'));
-    sessionStorage.setItem("vh", urlParams.get('vh'));
-    var visitID = await getVisitID();
-    sessionStorage.setItem("visitID", visitID);
-    sessionStorage.setItem("loginTime", new Date().toISOString().slice(0, 19).replace('T', ' '));
-  }
-});
-
 async function getVisitID(){
   try {
     var participantID = sessionStorage.getItem("participantID");
@@ -75,6 +64,9 @@ function Introduction() {
   };
 
   useEffect(() => {
+  
+    handleSessionStorage();
+
     const videoElement = videoRef.current;
 
     const handleTimeUpdate = () => {
@@ -129,5 +121,24 @@ function Introduction() {
     );
   }
 }
+
+const handleSessionStorage = async () => {
+  sessionStorage.clear();
+  const urlParams = new URLSearchParams(window.location.search);
+
+  if (sessionStorage.length < 1 && urlParams.get('participantID') !== null && urlParams.get('vh') !== null) {
+    sessionStorage.setItem("participantID", urlParams.get('participantID'));
+    sessionStorage.setItem("vh", urlParams.get('vh'));
+    
+    try {
+      var visitID = await getVisitID(); // Ensure getVisitID() is properly defined and returns a promise
+      sessionStorage.setItem("visitID", visitID);
+    } catch (error) {
+      console.error("Error fetching visit ID:", error);
+    }
+    
+    sessionStorage.setItem("loginTime", new Date().toISOString().slice(0, 19).replace('T', ' '));
+  }
+};
 
 export default Introduction;
