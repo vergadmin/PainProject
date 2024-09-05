@@ -43,7 +43,7 @@ const appendVHInteractions = () => {
     sessionStorage.setItem('vhInteractionCount', parseInt(vhInteractionCount) + 1);
     var participantID = sessionStorage.getItem('participantID');
     sessionStorage.clear();
-    window.location.href = `https://iu.co1.qualtrics.com/jfe/form/SV_6FgOfPn6emkWhAW?ID=${participantID}`;
+    window.location.href = `https://iu.co1.qualtrics.com/jfe/form/SV_bNiIsKNqegACkHs?ID=${participantID}`;
   }
 };
 
