@@ -54,7 +54,7 @@ function Introduction() {
   };
 
   function setUserPrompt(userPrompt){
-      sessionStorage.setItem("userPrompt", userPrompt);
+    sessionStorage.setItem("userPrompt", userPrompt);
   };
 
 
@@ -64,8 +64,10 @@ function Introduction() {
   };
 
   useEffect(() => {
+      handleSessionStorage();
+  }, [])
   
-    handleSessionStorage();
+  useEffect(() => {
 
     const videoElement = videoRef.current;
 
