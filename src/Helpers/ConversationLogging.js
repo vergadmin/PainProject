@@ -41,8 +41,9 @@ const appendVHInteractions = () => {
   else{
     var vhInteractionCount = sessionStorage.getItem('vhInteractionCount');
     sessionStorage.setItem('vhInteractionCount', parseInt(vhInteractionCount) + 1);
+    var participantID = sessionStorage.getItem('participantID');
     sessionStorage.clear();
-    window.location.href = 'https://www.example.com';
+    window.location.href = `https://iu.co1.qualtrics.com/jfe/form/SV_6FgOfPn6emkWhAW?ID=${participantID}`;
   }
 };
 
