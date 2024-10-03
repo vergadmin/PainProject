@@ -90,11 +90,15 @@ function Interaction2() {
         setLastUserMessage(userMessage);
         setLastSystemResponse(systemResponse);
 
+        var videoName = systemResponse.replace(/ /g, '_').replace(/[^\w_]/g, '');
+        videoName = videoName.substring(0, 50);
+        // console.log("Notice", videoName);
+  
         let displayName = event.detail.response.queryResult.intent.displayName;
         displayName = displayName.replaceAll(" ", "");
         displayName = displayName.replaceAll("/", "_");
         console.log(displayName);
-        const videoURL = `${AWSVideoURLBase}${displayName}.mp4`;
+        const videoURL = `${AWSVideoURLBase}${videoName}.mp4`;
         if (displayName !== "DefaultWelcomeIntent") {
           changeVideoSource(videoURL);
         }

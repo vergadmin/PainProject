@@ -30,7 +30,7 @@ const ModalComponent = ({ isOpen, type, onClose }) => {
         <div className="modal">
           <button className="close-btn" onClick={onClose}>×</button>
           <h2>Your Session with patient is about to end</h2> {/* Change this to any other content you need */}
-          <p>Hey, you have one minute remaining to interact with the paitent.</p>
+          <p>You have one minute remaining to interact with the patient.</p>
           <br/>
         </div>
       </div>
