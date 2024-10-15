@@ -25,19 +25,38 @@ function Introduction() {
   const [showNextButton, setShowNextButton] = useState(false);
   const [userInput, setUserInput] = useState(sessionStorage.getItem("userPrompt") || '');
   const videoRef = useRef(null);
+  var contentItems = []
+  const urlParamsVH = new URLSearchParams(window.location.search).get('vh');
+  console.log(urlParamsVH)
 
-  const contentItems = [
-    { name: 'Pain Disparities Training with Virtual Patients', src: '', description: 'Welcome to this training on pain disparities with virtual patients! In this training, you will first view a few educational videos from our virtual physician, Daren. Then, you will have the opportunity to interact with a virtual patient.\n\nPlease click the button below to begin!'},
-    { name: 'Pain Disparities', src: 'https://painproject-content.s3.amazonaws.com/didactic-agent/PainDisparities.mp4', description: 'Daren, a virtual physician, will give a brief overview on pain disparities, empathy, and perspective-taking.'},
-    { name: 'Empathy 1', src: 'https://painproject-content.s3.amazonaws.com/didactic-agent/Empathy1.mp4', description: 'Daren, a virtual physician, will give a brief overview on pain disparities, empathy, and perspective-taking.' },
-    { name: `Gwen's Story`, src: 'https://painproject-content.s3.amazonaws.com/didactic-agent/EmpathyGwen.mp4', description: 'Daren, a virtual physician, will give a brief overview on pain disparities, empathy, and perspective-taking.' },
-    { name: `Empathy 2`, src: 'https://painproject-content.s3.amazonaws.com/didactic-agent/Empathy2.mp4', description: 'Daren, a virtual physician, will give a brief overview on pain disparities, empathy, and perspective-taking.' },
-    { name: 'Perspective Taking 1', src: 'https://painproject-content.s3.amazonaws.com/didactic-agent/PerspectiveTaking1.mp4', description: 'Daren, a virtual physician, will give a brief overview on pain disparities, empathy, and perspective-taking.' },
-    { name: `Andre's Story`, src: 'https://painproject-content.s3.amazonaws.com/didactic-agent/PerspectiveTakingAndre.mp4', description: 'Daren, a virtual physician, will give a brief overview on pain disparities, empathy, and perspective-taking.' },
-    { name: 'Perspective Taking 2', src: 'https://painproject-content.s3.amazonaws.com/didactic-agent/PerspectiveTaking2.mp4', description: 'Daren, a virtual physician, will give a brief overview on pain disparities, empathy, and perspective-taking.' },
-    { name: 'Perspective Taking 3', src: 'https://painproject-content.s3.amazonaws.com/didactic-agent/PerspectiveTaking3.mp4', description: 'Daren, a virtual physician, will give a brief overview on pain disparities, empathy, and perspective-taking.' },
-    { name: "Fiction Contract", src: "https://painproject-content.s3.amazonaws.com/didactic-agent/FictionContractTransition.mp4", description: 'Before interacting with the virtual patient, you will read and sign a Fiction Contract. Daren will give you a brief introduction below.'}
-  ];
+  if (urlParamsVH === 'daren') {
+    contentItems = [
+      { name: 'Pain Disparities Training with Virtual Patients', src: '', description: 'Welcome to this training on pain disparities with virtual patients! In this training, you will first view a few educational videos from our virtual physician, Daren.\n\nPlease click the button below to begin!'},
+      { name: 'Pain Disparities', src: 'https://painproject-content.s3.amazonaws.com/didactic-agent/PainDisparities.mp4', description: 'Daren, a virtual physician, will give a brief overview on pain disparities, empathy, and perspective-taking.'},
+      { name: 'Empathy 1', src: 'https://painproject-content.s3.amazonaws.com/didactic-agent/Empathy1.mp4', description: 'Daren, a virtual physician, will give a brief overview on pain disparities, empathy, and perspective-taking.' },
+      { name: `Gwen's Story`, src: 'https://painproject-content.s3.amazonaws.com/didactic-agent/EmpathyGwen.mp4', description: 'Daren, a virtual physician, will give a brief overview on pain disparities, empathy, and perspective-taking.' },
+      { name: `Empathy 2`, src: 'https://painproject-content.s3.amazonaws.com/didactic-agent/Empathy2.mp4', description: 'Daren, a virtual physician, will give a brief overview on pain disparities, empathy, and perspective-taking.' },
+      { name: 'Perspective Taking 1', src: 'https://painproject-content.s3.amazonaws.com/didactic-agent/PerspectiveTaking1.mp4', description: 'Daren, a virtual physician, will give a brief overview on pain disparities, empathy, and perspective-taking.' },
+      { name: `Andre's Story`, src: 'https://painproject-content.s3.amazonaws.com/didactic-agent/PerspectiveTakingAndre.mp4', description: 'Daren, a virtual physician, will give a brief overview on pain disparities, empathy, and perspective-taking.' },
+      { name: 'Perspective Taking 2', src: 'https://painproject-content.s3.amazonaws.com/didactic-agent/PerspectiveTaking2.mp4', description: 'Daren, a virtual physician, will give a brief overview on pain disparities, empathy, and perspective-taking.' },
+      { name: 'Perspective Taking 3', src: 'https://painproject-content.s3.amazonaws.com/didactic-agent/PerspectiveTaking3.mp4', description: 'Daren, a virtual physician, will give a brief overview on pain disparities, empathy, and perspective-taking.' },
+    ];
+  } else {
+    contentItems = [
+      { name: 'Pain Disparities Training with Virtual Patients', src: '', description: 'Welcome to this training on pain disparities with virtual patients! In this training, you will first view a few educational videos from our virtual physician, Daren. Then, you will have the opportunity to interact with a virtual patient.\n\nPlease click the button below to begin!'},
+      { name: 'Pain Disparities', src: 'https://painproject-content.s3.amazonaws.com/didactic-agent/PainDisparities.mp4', description: 'Daren, a virtual physician, will give a brief overview on pain disparities, empathy, and perspective-taking.'},
+      { name: 'Empathy 1', src: 'https://painproject-content.s3.amazonaws.com/didactic-agent/Empathy1.mp4', description: 'Daren, a virtual physician, will give a brief overview on pain disparities, empathy, and perspective-taking.' },
+      { name: `Gwen's Story`, src: 'https://painproject-content.s3.amazonaws.com/didactic-agent/EmpathyGwen.mp4', description: 'Daren, a virtual physician, will give a brief overview on pain disparities, empathy, and perspective-taking.' },
+      { name: `Empathy 2`, src: 'https://painproject-content.s3.amazonaws.com/didactic-agent/Empathy2.mp4', description: 'Daren, a virtual physician, will give a brief overview on pain disparities, empathy, and perspective-taking.' },
+      { name: 'Perspective Taking 1', src: 'https://painproject-content.s3.amazonaws.com/didactic-agent/PerspectiveTaking1.mp4', description: 'Daren, a virtual physician, will give a brief overview on pain disparities, empathy, and perspective-taking.' },
+      { name: `Andre's Story`, src: 'https://painproject-content.s3.amazonaws.com/didactic-agent/PerspectiveTakingAndre.mp4', description: 'Daren, a virtual physician, will give a brief overview on pain disparities, empathy, and perspective-taking.' },
+      { name: 'Perspective Taking 2', src: 'https://painproject-content.s3.amazonaws.com/didactic-agent/PerspectiveTaking2.mp4', description: 'Daren, a virtual physician, will give a brief overview on pain disparities, empathy, and perspective-taking.' },
+      { name: 'Perspective Taking 3', src: 'https://painproject-content.s3.amazonaws.com/didactic-agent/PerspectiveTaking3.mp4', description: 'Daren, a virtual physician, will give a brief overview on pain disparities, empathy, and perspective-taking.' },
+      { name: "Fiction Contract", src: "https://painproject-content.s3.amazonaws.com/didactic-agent/FictionContractTransition.mp4", description: 'Before interacting with the virtual patient, you will read and sign a Fiction Contract. Daren will give you a brief introduction below.'}
+    ];
+  }
+
+  
 
   const handleNext = async () => {
     if (contentItems[currentContentIndex].name === 'Perspective Taking 2') {
@@ -115,7 +134,8 @@ function Introduction() {
             {currentContentIndex >= 2 && <button className='default-btn' onClick={handlePrevious}>◄ Previous: {contentItems[currentContentIndex-1].name}</button>}
             <div className={`hide-buttons ${showNextButton ? 'show' : null}`}>
               {currentContentIndex !== contentItems.length - 1 && <button className='default-btn pulse' onClick={handleNext}>Next: {contentItems[currentContentIndex + 1].name} ►</button>}
-              {currentContentIndex === contentItems.length - 1 && <button className='important-btn pulse'><Link className="button-link-light" to="/fiction">Continue ►</Link></button>}
+              {currentContentIndex === contentItems.length - 1 && urlParamsVH !== 'daren' && <button className='important-btn pulse'><Link className="button-link-light" to="/fiction">Continue ►</Link></button>}
+              {currentContentIndex === contentItems.length - 1 && urlParamsVH === 'daren' && <button className='important-btn pulse'><Link className="button-link-light" to="/end">Continue ►</Link></button>}
             </div>
           </div>
         </div>
